@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "broadcastTitlePrefix": {
+            "description": "配信タイトルの先頭に付与する文字",
+            "type": "string"
+        },
+        "twitchId": {
+            "description": "配信先のTwitch ID",
+            "type": "string"
+        }
+    },
+    "type": "object"
+}
+

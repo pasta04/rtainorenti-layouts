@@ -1,0 +1,10 @@
+{
+	"extends": "@hoishin/tsconfig",
+	"compilerOptions": {
+		"target": "esnext",
+		"lib": ["esnext"],
+		"types": [],
+		"sourceMap": true,
+		"resolveJsonModule": true
+	}
+}
