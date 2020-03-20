@@ -1,0 +1,15 @@
+@font-face {
+	font-family: 'PixelMplus10';
+	src: url('./pixelmplus10-regular.woff2') format('woff2'),
+		url('./pixelmplus10-regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'PixelMplus10';
+	src: url('./pixelmplus10-bold.woff2') format('woff2'),
+		url('./pixelmplus10-bold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+}

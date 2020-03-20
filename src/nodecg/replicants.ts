@@ -26,6 +26,7 @@ export {
 	NextRun,
 	Schedule,
 	Timer,
+	Spreadsheet,
 	Twitch,
 	Run,
 	Participant,

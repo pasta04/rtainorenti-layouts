@@ -4,16 +4,17 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import {makeStyles} from '@material-ui/core';
 import backgroundImage from '../images/background/background.png';
-import logoImage from '../images/logo/logo.png';
 import {Timer, CurrentRun} from '../../../nodecg/replicants';
-import moment from 'moment';
+import classnames from 'classnames';
+import {Header} from '../components/header';
+import {calcWidthFitFontSize} from '../../util';
 
 const useStyles = makeStyles({
 	root: {
 		width: 1920,
 		height: 1080,
 	},
-	logo: {
+	logoArea: {
 		position: 'absolute',
 		top: 10,
 		left: 5,
@@ -27,24 +28,70 @@ const useStyles = makeStyles({
 	},
 	runInfoArea: {
 		position: 'absolute',
-		top: 115,
+		top: 140,
 		left: 1460,
 		color: 'white',
 		fontSize: 40,
 		width: 450,
 	},
-	runItem: {
+	runItemRunners: {
 		height: 130,
+	},
+	runItemGame: {
+		height: 180,
+	},
+	runItemGategory: {
+		position: 'absolute',
+		top: 350,
+		width: 450,
+	},
+	runItemTime: {
+		position: 'absolute',
+		top: 500,
+		width: 450,
+	},
+	runItemEst: {
+		position: 'absolute',
+		top: 620,
+		width: 450,
+		display: 'flex',
+	},
+	runInfoLabel: {
+		fontFamily: 'PressStart2P',
 	},
 	runInfoValue: {
 		textAlign: 'center',
+		fontFamily: 'PixelMplus10',
 	},
+	/** 現在時刻 */
 	nowClock: {
 		position: 'absolute',
 		top: 10,
 		left: 1580,
 		fontSize: 30,
 		color: 'white',
+		fontFamily: 'PressStart2P',
+		textAlign: 'center',
+	},
+	/** メインタイトル */
+	title: {
+		fontFamily: 'PressStart2P',
+		color: 'yellow',
+		fontSize: 64,
+	},
+	/** サブタイトル */
+	subtitle: {
+		fontFamily: 'PressStart2P',
+		color: 'yellow',
+		fontSize: 32,
+	},
+	// タイマーリタイア色
+	timerRetire: {
+		color: 'silver',
+	},
+	// タイマー完走色
+	timerComplete: {
+		color: 'yellow',
 	},
 });
 
@@ -58,9 +105,6 @@ const App: React.SFC = () => {
 	const [runners, setRunners] = React.useState<CurrentRun>(null);
 	const [timer, setTimer] = React.useState<Timer>();
 
-	const [now, setNow] = React.useState<Date>(new Date());
-	React.useEffect(() => setNow(new Date()));
-
 	const runnerHandler = (newVal: CurrentRun) =>
 		setRunners(newVal && {...newVal});
 	React.useEffect(() => {
@@ -70,7 +114,9 @@ const App: React.SFC = () => {
 		};
 	}, [currentRunRep]);
 
-	const timerHandler = (newVal: Timer) => setTimer({...newVal});
+	const timerHandler = (newVal: Timer) => {
+		setTimer({...newVal});
+	};
 	React.useEffect(() => {
 		timerRep.on('change', timerHandler);
 		return () => {
@@ -94,52 +140,62 @@ const App: React.SFC = () => {
 			// 映像の領域を切り取り
 			ctx.globalCompositeOperation = 'xor';
 			// ゲーム
-			ctx.fillRect(10, 120, 1440, 810);
+			ctx.fillRect(10, 180, 1440, 810);
 			// カメラ
 			ctx.fillRect(1920 - 458, 1080 - 262, 448, 252);
 		});
 	});
 
+	const timerClass = classnames(classes.runInfoValue, {
+		[classes.timerRetire]: timer?.results[0]?.forfeit === true,
+		[classes.timerComplete]:
+			timer?.results[0]?.timerState === 'Stopped' &&
+			timer?.results[0].forfeit === false,
+	});
 	return (
 		<div className={classes.root}>
-			{/* ロゴ */}
-			<div className={classes.logo}>
-				<img src={logoImage} height={100} />
-			</div>
-
-			{/* 現在時刻 */}
-			<div className={classes.nowClock}>
-				{moment(new Date(now)).format('YYYY/MM/DD hh:mm:ss')}
-			</div>
+			<Header />
 
 			{/* 走者情報 */}
 			<div className={classes.runInfoArea}>
-				<div className={classes.runItem}>
-					<div>RUNNER</div>
+				<div className={classes.runItemRunners}>
+					<div className={classes.runInfoLabel}>RUNNER</div>
 					<div className={classes.runInfoValue}>
 						{runners?.runners
 							.map((runner) => runner.name)
 							.join('/')}
 					</div>
 				</div>
-				<div className={classes.runItem}>
-					<div>GAME</div>
-					<div className={classes.runInfoValue}>{runners?.title}</div>
+				<div className={classes.runItemGame}>
+					<div className={classes.runInfoLabel}>GAME</div>
+					<div
+						className={classes.runInfoValue}
+						style={{
+							fontSize: calcWidthFitFontSize(
+								runners?.title ?? '',
+								1200,
+								22,
+								40,
+								'px',
+								'PixelMplus10',
+							),
+						}}
+					>
+						{runners?.title}
+					</div>
 				</div>
-				<div className={classes.runItem}>
-					<div>CATEGORY</div>
+				<div className={classes.runItemGategory}>
+					<div className={classes.runInfoLabel}>CATEGORY</div>
 					<div className={classes.runInfoValue}>
 						{runners?.category}
 					</div>
 				</div>
-				<div className={classes.runItem}>
-					<div>TIME</div>
-					<div className={classes.runInfoValue}>
-						{timer?.formatted} ... ({timer?.timerState})
-					</div>
+				<div className={classes.runItemTime}>
+					<div className={classes.runInfoLabel}>TIME</div>
+					<div className={timerClass}>{timer?.formatted}</div>
 				</div>
-				<div className={classes.runItem}>
-					<div>EST</div>
+				<div className={classes.runItemEst}>
+					<div className={classes.runInfoLabel}>EST　</div>
 					<div className={classes.runInfoValue}>
 						{runners?.runDuration}
 					</div>

@@ -16,7 +16,7 @@ const Container = styled.div`
 
 	background-color: white;
 	box-sizing: border-box;
-	padding: 16px;
+	padding: 11px;
 
 	display: grid;
 	grid-auto-flow: row;

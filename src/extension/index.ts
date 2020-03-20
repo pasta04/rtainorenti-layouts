@@ -2,7 +2,7 @@ import 'source-map-support/register';
 import {checklist} from './checklist';
 import schedule from './schedule';
 import {timekeeping} from './timekeeping';
-import {NodeCG} from './nodecg';
+import {NodeCG} from '../nodecg/nodecg';
 import {twitch} from './twitch';
 
 export = (nodecg: NodeCG) => {

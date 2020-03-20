@@ -1,6 +1,6 @@
 import got from 'got';
 import appRootPath from 'app-root-path';
-import {NodeCG} from './nodecg';
+import {NodeCG} from '../nodecg/nodecg';
 import {CurrentRun} from '../nodecg/replicants';
 
 export const twitch = (nodecg: NodeCG) => {

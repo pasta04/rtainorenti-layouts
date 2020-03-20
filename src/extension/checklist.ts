@@ -1,6 +1,6 @@
 import {isEqual} from 'lodash';
 import defaultChecklist from './default/checklist';
-import {NodeCG} from './nodecg';
+import {NodeCG} from '../nodecg/nodecg';
 
 /** チェックリストの制御 */
 export const checklist = (nodecg: NodeCG) => {
