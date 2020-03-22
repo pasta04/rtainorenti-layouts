@@ -1,0 +1,15 @@
+@font-face {
+	font-family: 'KouzanGyousho';
+	src: url('./kouzanGyousho.woff2') format('woff2'),
+		url('./kouzanGyousho.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'KouzanGyousho';
+	src: url('./kouzanGyousho.woff2') format('woff2'),
+		url('./kouzanGyousho.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+}

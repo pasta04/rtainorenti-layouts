@@ -145,6 +145,14 @@
 				"width": 2,
 				"headerColor": "#00BEBE",
 				"workspace": "1-special"
+			},
+			{
+				"name": "tournament",
+				"title": "トーナメント",
+				"file": "tournament.html",
+				"width": 8,
+				"headerColor": "#00BEBE",
+				"workspace": "2-tournament"
 			}
 		],
 		"graphics": [
@@ -172,6 +180,11 @@
 				"file": "sd2.html",
 				"width": 1920,
 				"height": 1080
+			},
+			{
+				"file": "naitou.html",
+				"width": 935,
+				"height": 526
 			}
 		],
 		"assetCategories": [

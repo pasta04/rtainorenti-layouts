@@ -5,6 +5,10 @@
 			"description": "配信タイトルの先頭に付与する文字",
 			"type": "string"
 		},
+		"challongeApiKey": {
+			"description": "Challonge APIのkey",
+			"type": "string"
+		},
 		"googleApiKey": {
 			"description": "Google APIのkey",
 			"type": "string"

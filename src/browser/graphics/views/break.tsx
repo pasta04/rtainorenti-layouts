@@ -87,7 +87,7 @@ const Break: React.FunctionComponent = () => {
 	return (
 		<div className={classes.root}>
 			{/* 時計 */}
-			<Clock />
+			<Clock top={10} left={1400} fontSize={50} />
 
 			{/* 次の走者 */}
 			<div className={classes.nextArea}>

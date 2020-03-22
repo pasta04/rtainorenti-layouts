@@ -1,6 +1,7 @@
 @import '~modern-normalize/modern-normalize.css';
 @import '../../fonts/PixelMplus10/index.css';
 @import '../../fonts/pressstart2p/index.css';
+@import '../../fonts/kouzanGyousho/index.css';
 
 body {
 	font-family: 'tbudgothic-std';

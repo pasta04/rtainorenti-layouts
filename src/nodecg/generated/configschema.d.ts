@@ -17,4 +17,6 @@ export type Configschema = {
 	googleApiKey?: string;
 	/** スプレッドシートのID */
 	spreadsheetId?: string;
+	/** Challonge APIのkey */
+	challongeApiKey?: string;
 };

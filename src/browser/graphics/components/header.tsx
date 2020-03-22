@@ -41,7 +41,7 @@ export const Header: React.SFC = () => {
 			</div>
 
 			{/* 現在時刻 */}
-			<Clock />
+			<Clock top={10} left={1400} fontSize={50} />
 		</div>
 	);
 };
