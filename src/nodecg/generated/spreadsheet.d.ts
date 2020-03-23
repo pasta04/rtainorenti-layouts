@@ -32,4 +32,8 @@ export interface Spreadsheet {
 		twitch?: string;
 		[k: string]: any;
 	}[];
+	tournamentMatchTitle: {
+		id: string;
+		matchTitle: string;
+	}[];
 }

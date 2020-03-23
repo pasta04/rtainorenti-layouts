@@ -66,7 +66,7 @@ const useStyles = makeStyles({
 });
 
 const currentRunRep = nodecg.Replicant('current-run');
-const tournamentRep = nodecg.Replicant('tournament');
+const tournamentRep = nodecg.Replicant('tournamentCurrent');
 
 const App: React.SFC = () => {
 	const classes = useStyles({});

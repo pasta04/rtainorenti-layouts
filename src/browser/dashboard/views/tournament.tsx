@@ -1,6 +1,10 @@
 import React, {ChangeEvent, useRef} from 'react';
 import ReactDOM from 'react-dom';
-import {TournamentCurrent, Challonge} from '../../../nodecg/replicants';
+import {
+	TournamentCurrent,
+	Challonge,
+	Spreadsheet,
+} from '../../../nodecg/replicants';
 import {
 	Button,
 	TextField,
@@ -34,9 +38,14 @@ const useStyles = makeStyles({
 	roundInfo: {
 		margin: 10,
 	},
+	select: {
+		minWidth: 300,
+		maxWidth: 700,
+	},
 });
 
-const tournamentRep = nodecg.Replicant('tournament');
+const tournamentRep = nodecg.Replicant('tournamentCurrent');
+const spreadsheetRep = nodecg.Replicant('spreadsheet');
 const challongeRep = nodecg.Replicant('challonge');
 const currentRunRep = nodecg.Replicant('current-run');
 
@@ -52,6 +61,9 @@ const App: React.SFC = () => {
 		},
 	});
 	const [matchTitle, setMatchTitle] = React.useState<string>('');
+	const [matchTitleList, setMatchTitleList] = React.useState<
+		Spreadsheet['tournamentMatchTitle']
+	>([]);
 
 	const [challonge, setChallonge] = React.useState<Challonge>({
 		tournamentName: '',
@@ -59,14 +71,24 @@ const App: React.SFC = () => {
 	});
 
 	const [playerSelect, setPlayerSelect] = React.useState<number>(0);
+	const [matchTitleSelect, setMatchTitleSelect] = React.useState<number>(0);
 
 	const challongeIdRef = useRef<HTMLTextAreaElement>(null);
-	const playerRef = useRef<HTMLSelectElement>(null);
+
+	/** トーナメントレプリカント */
+	const shandler = (newVal: Spreadsheet) => {
+		setMatchTitleList([...newVal.tournamentMatchTitle]);
+	};
+	React.useEffect(() => {
+		spreadsheetRep.on('change', shandler);
+		return () => {
+			spreadsheetRep.removeListener('change', shandler);
+		};
+	}, [spreadsheetRep]);
 
 	/** トーナメントレプリカント */
 	const thandler = (newVal: TournamentCurrent) => {
 		setTournament({...newVal});
-		setMatchTitle(newVal.title);
 	};
 	React.useEffect(() => {
 		tournamentRep.on('change', thandler);
@@ -88,7 +110,17 @@ const App: React.SFC = () => {
 
 	/** タイトル更新反映ボタン */
 	const editMatchname = () => {
-		nodecg.sendMessage('editMatchname', matchTitle);
+		const selected =
+			matchTitleSelect > 0
+				? matchTitleList[matchTitleSelect - 1].matchTitle
+				: '';
+		const msg = matchTitle ? matchTitle : selected;
+		nodecg.sendMessage('editMatchname', msg);
+	};
+	const resetMatchname = () => {
+		nodecg.sendMessage('editMatchname', '');
+		setMatchTitleSelect(0);
+		setMatchTitle('');
 	};
 	const handleTextInput = (e: ChangeEvent<HTMLInputElement>) => {
 		setMatchTitle(e.target.value);
@@ -101,6 +133,15 @@ const App: React.SFC = () => {
 		}>,
 	) => {
 		setPlayerSelect(Number(e.target.value));
+	};
+
+	const handleMatchTitleSelect = (
+		e: React.ChangeEvent<{
+			name?: string | undefined;
+			value: unknown;
+		}>,
+	) => {
+		setMatchTitleSelect(Number(e.target.value));
 	};
 
 	const fetchTournament = () => {
@@ -187,13 +228,40 @@ const App: React.SFC = () => {
 			{/* タイトル入力 */}
 			<Paper className={classes.paper}>
 				<Typography variant={'h5'}>N回戦の文字列</Typography>
-				<div>
-					<TextField
-						value={matchTitle}
-						onChange={handleTextInput}
-						variant={'outlined'}
-						placeholder={'例：第1回戦'}
-					/>
+				<div style={{display: 'flex'}}>
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							padding: 5,
+						}}
+					>
+						<div style={{marginBottom: 5}}>
+							<Select
+								className={classes.select}
+								variant={'outlined'}
+								value={matchTitleSelect}
+								onChange={handleMatchTitleSelect}
+							>
+								<MenuItem key={'-'} value={0}>
+									-
+								</MenuItem>
+								{matchTitleList.map((m, index) => {
+									return (
+										<MenuItem key={m.id} value={index + 1}>
+											{m.matchTitle}
+										</MenuItem>
+									);
+								})}
+							</Select>
+						</div>
+						<TextField
+							value={matchTitle}
+							onChange={handleTextInput}
+							variant={'outlined'}
+							placeholder={'自由入力。何か入力していたら優先'}
+						/>
+					</div>
 					<Button
 						className={classes.button}
 						onClick={editMatchname}
@@ -202,6 +270,20 @@ const App: React.SFC = () => {
 					>
 						反映
 					</Button>
+					<Button
+						className={classes.button}
+						onClick={resetMatchname}
+						variant={'contained'}
+						color={'secondary'}
+					>
+						リセット
+					</Button>
+				</div>
+				{/* 表示中 */}
+				<div>
+					<Typography variant={'h6'}>
+						【表示中】{tournament.title}
+					</Typography>
 				</div>
 			</Paper>
 
@@ -210,8 +292,8 @@ const App: React.SFC = () => {
 				<Typography variant={'h5'}>対戦者情報選択</Typography>
 				<div>
 					<Select
-						style={{minWidth: 300, maxWidth: 700}}
-						inputRef={playerRef}
+						className={classes.select}
+						variant={'outlined'}
 						value={playerSelect}
 						onChange={handlePlayerSelect}
 					>

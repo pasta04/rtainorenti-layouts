@@ -4,7 +4,7 @@ import schedule from './schedule';
 import {timekeeping} from './timekeeping';
 import {NodeCG} from '../nodecg/nodecg';
 import {twitch} from './twitch';
-import {challonge, tournament} from './challonge';
+import {challonge, tournamentCurrent} from './challonge';
 
 export = (nodecg: NodeCG) => {
 	checklist(nodecg);
@@ -12,5 +12,5 @@ export = (nodecg: NodeCG) => {
 	timekeeping(nodecg);
 	twitch(nodecg);
 	challonge(nodecg);
-	tournament(nodecg);
+	tournamentCurrent(nodecg);
 };

@@ -21,7 +21,12 @@ export default async (nodecg: NodeCG) => {
 	const nextRunRep = nodecg.Replicant('next-run', {defaultValue: null});
 	const checklistRep = nodecg.Replicant('checklist', {defaultValue: []});
 	const spreadsheetRep = nodecg.Replicant('spreadsheet', {
-		defaultValue: {runs: [], runners: [], commentators: []},
+		defaultValue: {
+			runs: [],
+			runners: [],
+			commentators: [],
+			tournamentMatchTitle: [],
+		},
 	});
 
 	const sheetsApi = google.sheets({version: 'v4', auth: googleApiKey});
@@ -29,7 +34,7 @@ export default async (nodecg: NodeCG) => {
 	const fetchSpreadsheet = async () => {
 		const res = await sheetsApi.spreadsheets.values.batchGet({
 			spreadsheetId,
-			ranges: ['ゲーム', '走者', '解説'],
+			ranges: ['ゲーム', '走者', '解説', 'トーナメント'],
 		});
 		const sheetValues = res.data.valueRanges;
 		if (!sheetValues) {
@@ -47,6 +52,7 @@ export default async (nodecg: NodeCG) => {
 			runs: labelledValues[0],
 			runners: labelledValues[1],
 			commentators: labelledValues[2],
+			tournamentMatchTitle: labelledValues[3],
 		};
 		if (isEqual(spreadsheetRep.value, newSpreadsheet)) {
 			return;

@@ -19,7 +19,7 @@ type ReplicantMap = {
 	timer: Timer;
 	twitch: Twitch;
 	challonge: Challonge;
-	tournament: TournamentCurrent;
+	tournamentCurrent: TournamentCurrent;
 };
 
 export {

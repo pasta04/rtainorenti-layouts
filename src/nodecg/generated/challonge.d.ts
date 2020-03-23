@@ -13,7 +13,7 @@ export type Challonge = {
 
 /** 現在のトーナメント */
 export type TournamentCurrent = {
-	/** N回戦みたいな表示 */
+	/** 表示中のN回戦表記 */
 	title: string;
 	/** プレイヤー1のラウンド取得数 */
 	runner1: {

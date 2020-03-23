@@ -63,8 +63,8 @@ export const challonge = (nodecg: NodeCG) => {
 	nodecg.listenFor('fetchTournament', fetchTournament);
 };
 
-export const tournament = (nodecg: NodeCG) => {
-	const rep = nodecg.Replicant('tournament', {
+export const tournamentCurrent = (nodecg: NodeCG) => {
+	const rep = nodecg.Replicant('tournamentCurrent', {
 		defaultValue: {
 			title: '',
 			runner1: {
