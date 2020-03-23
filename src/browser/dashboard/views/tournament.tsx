@@ -302,9 +302,13 @@ const App: React.SFC = () => {
 						</MenuItem>
 
 						{challonge.data.map((data, index) => {
-							const text = `${data.match.round}回戦 ${data.match
-								.player1_name ?? '★未定★'} vs ${data.match
-								.player2_name ?? '★未定★'}`;
+							const prefix =
+								data.match.round < 0 ? '敗者復活' : '';
+							const text = `${prefix}${Math.abs(
+								data.match.round,
+							)}回戦 ${data.match.player1_name ??
+								'★未定★'} vs ${data.match.player2_name ??
+								'★未定★'}`;
 							return (
 								<MenuItem
 									key={`${text}_${index}`}

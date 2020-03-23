@@ -5,6 +5,7 @@ import {
 	ChallongeParticipants,
 } from '../nodecg/challonge';
 
+/** Challongeのトーナメント情報を取得する */
 export const challonge = (nodecg: NodeCG) => {
 	const {challongeApiKey} = nodecg.bundleConfig;
 	const challongeRep = nodecg.Replicant('challonge', {
@@ -21,6 +22,7 @@ export const challonge = (nodecg: NodeCG) => {
 		log.info(`url access: ${url}`);
 		const {body} = await got(url);
 		const json: ChallongeParticipants = JSON.parse(body);
+		log.debug(JSON.stringify(json, null, '  '));
 		return json;
 	};
 
@@ -29,6 +31,7 @@ export const challonge = (nodecg: NodeCG) => {
 		log.info(`url access: ${url}`);
 		const {body} = await got(url);
 		const json: ChallongeMatchResponse = JSON.parse(body);
+		log.debug(JSON.stringify(json, null, '  '));
 		return json;
 	};
 
@@ -37,7 +40,7 @@ export const challonge = (nodecg: NodeCG) => {
 		const participants = await fetchParticipants(tournamentId);
 		const playerIdToName: {[id: number]: string} = {};
 		participants.map((pa) => {
-			playerIdToName[pa.participant.id] = pa.participant.name;
+			playerIdToName[pa.participant.id] = pa.participant.display_name;
 		});
 
 		// トーナメント情報を取得

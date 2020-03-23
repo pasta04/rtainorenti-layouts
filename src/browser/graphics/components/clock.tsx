@@ -32,7 +32,7 @@ export const Clock: React.SFC<Props> = (props: Props) => {
 	return (
 		<div className={classes.root} style={{...props}}>
 			<div>{moment(now).format('YYYY/MM/DD')}</div>
-			<div>{moment(now).format('hh:mm:ss')}</div>
+			<div>{moment(now).format('HH:mm:ss')}</div>
 		</div>
 	);
 };

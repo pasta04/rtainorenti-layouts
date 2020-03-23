@@ -35,32 +35,41 @@ export type ChallongeMatch = {
 
 export type ChallongeParticipants = {
 	participant: {
-		active: boolean;
-		checked_in_at: null;
-		created_at: string;
-		final_rank: null;
-		group_id: null;
-		icon: null;
 		/** プレイヤーID */
 		id: number;
-		invitation_id: null;
-		invite_email: null;
-		misc: null;
-		/** プレイヤー名 */
-		name: string;
-		on_waiting_list: boolean;
-		seed: number;
+		/** 参加しているトーナメントのID */
 		tournament_id: number;
+		/** プレイヤー名。空文字のこともある。 */
+		name: string;
+		/** Challongeのユーザ名 */
+		challonge_username: string | null;
+		username: string | null;
+		display_name: string;
+		display_name_with_invitation_email_address: string;
+
+		seed: number;
+		active: boolean;
+		/**
+		 * アカウント作成日時?
+		 * @example "2019-03-23T06:10:49.164+01:00"
+		 */
+		created_at: string;
+		invite_email: null;
+		final_rank: number | null;
+		misc: null;
+		icon: null;
+		on_waiting_list: boolean;
+		invitation_id: null;
+
+		checked_in_at: null;
+		group_id: null;
 		updated_at: string;
-		challonge_username: null;
 		challonge_email_address_verified: null;
 		removable: boolean;
 		participatable_or_invitation_attached: boolean;
 		confirm_remove: boolean;
 		invitation_pending: boolean;
-		display_name_with_invitation_email_address: string;
 		email_hash: null;
-		username: null;
 		attached_participatable_portrait_url: null;
 		can_check_in: boolean;
 		checked_in: boolean;
