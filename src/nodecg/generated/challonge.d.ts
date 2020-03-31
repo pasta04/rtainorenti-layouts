@@ -2,10 +2,19 @@ import {ChallongeMatch} from '../challonge';
 
 /** Challongeのトーナメント情報にプレイヤー名を加えたもの */
 export type Challonge = {
+	/**
+	 * トーナメントのID
+	 * @description URL末尾のアレ
+	 */
+	tournamentId: string;
+	/** トーナメントタイトル */
 	tournamentName: string;
+	/** トーナメントのデータ */
 	data: {
 		match: ChallongeMatch & {
+			/** 1Pのプレイヤー名 */
 			player1_name: string;
+			/** 2Pのプレイヤー名 */
 			player2_name: string;
 		};
 	}[];

@@ -42,6 +42,9 @@ const useStyles = makeStyles({
 		minWidth: 300,
 		maxWidth: 700,
 	},
+	divider: {
+		marginBottom: 30,
+	},
 });
 
 const tournamentRep = nodecg.Replicant('tournamentCurrent');
@@ -66,6 +69,7 @@ const App: React.SFC = () => {
 	>([]);
 
 	const [challonge, setChallonge] = React.useState<Challonge>({
+		tournamentId: '',
 		tournamentName: '',
 		data: [],
 	});
@@ -223,7 +227,14 @@ const App: React.SFC = () => {
 				</Button>
 			</Paper>
 
-			<Divider />
+			<Divider className={classes.divider} />
+
+			{/*  トーナメントタイトル */}
+			<Paper className={classes.paper}>
+				<Typography variant={'h4'}>
+					{challonge.tournamentName}
+				</Typography>
+			</Paper>
 
 			{/* タイトル入力 */}
 			<Paper className={classes.paper}>

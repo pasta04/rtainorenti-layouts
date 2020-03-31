@@ -1,8 +1,9 @@
 import got from 'got';
 import {NodeCG} from '../nodecg/nodecg';
 import {
-	ChallongeMatchResponse,
+	ChallongeMatchShow,
 	ChallongeParticipants,
+	ChallongeTournamentsShow,
 } from '../nodecg/challonge';
 
 /** Challongeのトーナメント情報を取得する */
@@ -10,6 +11,7 @@ export const challonge = (nodecg: NodeCG) => {
 	const {challongeApiKey} = nodecg.bundleConfig;
 	const challongeRep = nodecg.Replicant('challonge', {
 		defaultValue: {
+			tournamentId: '',
 			tournamentName: '',
 			data: [],
 		},
@@ -17,9 +19,18 @@ export const challonge = (nodecg: NodeCG) => {
 
 	const log = new nodecg.Logger('challonge');
 
+	const fetchTournament = async (tournamentId: string) => {
+		const url = `https://api.challonge.com/v1/tournaments/${tournamentId}.json?api_key=${challongeApiKey}`;
+		log.debug(`url access: ${url}`);
+		const {body} = await got(url);
+		const json: ChallongeTournamentsShow = JSON.parse(body);
+		log.debug(JSON.stringify(json, null, '  '));
+		return json;
+	};
+
 	const fetchParticipants = async (tournamentId: string) => {
 		const url = `https://api.challonge.com/v1/tournaments/${tournamentId}/participants.json?api_key=${challongeApiKey}`;
-		log.info(`url access: ${url}`);
+		log.debug(`url access: ${url}`);
 		const {body} = await got(url);
 		const json: ChallongeParticipants = JSON.parse(body);
 		log.debug(JSON.stringify(json, null, '  '));
@@ -28,14 +39,17 @@ export const challonge = (nodecg: NodeCG) => {
 
 	const fetchMatch = async (tournamentId: string) => {
 		const url = `https://api.challonge.com/v1/tournaments/${tournamentId}/matches.json?api_key=${challongeApiKey}`;
-		log.info(`url access: ${url}`);
+		log.debug(`url access: ${url}`);
 		const {body} = await got(url);
-		const json: ChallongeMatchResponse = JSON.parse(body);
+		const json: ChallongeMatchShow = JSON.parse(body);
 		log.debug(JSON.stringify(json, null, '  '));
 		return json;
 	};
 
-	const fetchTournament = async (tournamentId: string) => {
+	const fetchTournamentInfo = async () => {
+		const tournamentId: string = challongeRep.value.tournamentId;
+		if (!tournamentId) return;
+
 		// 参加者を取得
 		const participants = await fetchParticipants(tournamentId);
 		const playerIdToName: {[id: number]: string} = {};
@@ -58,12 +72,37 @@ export const challonge = (nodecg: NodeCG) => {
 		});
 
 		challongeRep.value = {
-			tournamentName: '',
+			...challongeRep.value,
 			data: newInfo,
 		};
 	};
 
-	nodecg.listenFor('fetchTournament', fetchTournament);
+	/** 画面で入力されたIDとタイトルを格納する */
+	const fetchTournamentInfoHandler = async (tournamentId: string) => {
+		log.info(`tournamentId: ${tournamentId}`);
+		// タイトルを取得
+		try {
+			const tournament = await fetchTournament(tournamentId);
+			const tournamentName = tournament ? tournament.tournament.name : '';
+			challongeRep.value = {
+				tournamentId,
+				tournamentName,
+				data: [],
+			};
+			await fetchTournamentInfo();
+		} catch (e) {
+			log.error(e);
+			challongeRep.value = {
+				tournamentId: '',
+				tournamentName: '',
+				data: [],
+			};
+		}
+	};
+	// 定期的に取得
+	setInterval(fetchTournamentInfo, 10 * 1000);
+
+	nodecg.listenFor('fetchTournament', fetchTournamentInfoHandler);
 };
 
 export const tournamentCurrent = (nodecg: NodeCG) => {
