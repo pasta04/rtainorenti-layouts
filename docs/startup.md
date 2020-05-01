@@ -49,6 +49,7 @@ Twitchでエラーっぽいメッセージが出るが気にしない。
 - nodecg.json
 ```json:
 {
+    "host": "★動作するホスト名、IPアドレス★",
     "login": {
         "enabled": true,
         "sessionSecret": "saltだから適当な値でよいのだ",
