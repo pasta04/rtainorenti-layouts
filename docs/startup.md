@@ -21,7 +21,7 @@ npm install -g yarn
 
 5. NodeCGのフォルダに移動する
 ```
-cd [解凍したフォルダ]
+cd [解凍したフォルダ]/rtainorenti-layouts
 ```
 
 5. パッケージのインストール
