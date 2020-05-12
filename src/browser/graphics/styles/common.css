@@ -6,4 +6,5 @@
 body {
 	font-family: 'tbudgothic-std';
 	font-weight: 400;
+	overflow: hidden;
 }

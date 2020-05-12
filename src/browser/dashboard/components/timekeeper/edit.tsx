@@ -20,6 +20,7 @@ const Container = styled.div`
 
 	display: flex;
 	flex-flow: column nowrap;
+	min-width: 810px;
 `;
 
 const Inputs = styled.div`

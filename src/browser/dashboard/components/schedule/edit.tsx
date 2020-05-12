@@ -21,6 +21,7 @@ const Container = styled.div`
 	display: grid;
 	grid-auto-flow: row;
 	grid-gap: 8px;
+	min-width: 810px;
 `;
 
 interface Props {
