@@ -194,6 +194,7 @@ export default async (nodecg: NodeCG) => {
 					run.runner1,
 					run.runner2,
 					run.runner3,
+					run.runner4,
 				]) {
 					const runner = runners.find((r) => r.id === runnerId);
 					if (runner && runner.name) {
@@ -209,6 +210,8 @@ export default async (nodecg: NodeCG) => {
 				for (const commentatorId of [
 					run.commentator1,
 					run.commentator2,
+					run.commentator3,
+					run.commentator4,
 				]) {
 					const commentator = commentators.find(
 						(r) => r.id === commentatorId,

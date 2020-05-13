@@ -12,8 +12,11 @@ export interface Spreadsheet {
 		runner1?: string;
 		runner2?: string;
 		runner3?: string;
+		runner4?: string;
 		commentator1?: string;
 		commentator2?: string;
+		commentator3?: string;
+		commentator4?: string;
 		[k: string]: any;
 	}[];
 	runners: {
