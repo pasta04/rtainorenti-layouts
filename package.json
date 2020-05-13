@@ -195,6 +195,16 @@
 				"file": "rr_sd2.html",
 				"width": 1280,
 				"height": 729
+			},
+			{
+				"file": "rr_sd3.html",
+				"width": 1280,
+				"height": 729
+			},
+			{
+				"file": "rr_sd4.html",
+				"width": 1280,
+				"height": 729
 			}
 		],
 		"assetCategories": [
