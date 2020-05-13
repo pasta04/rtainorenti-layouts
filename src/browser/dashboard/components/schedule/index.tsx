@@ -6,7 +6,7 @@ import {
 	CurrentRun,
 	NextRun,
 	Schedule as ScheduleSchema,
-  Timer,
+	Timer,
 } from '../../../../nodecg/replicants';
 import {EditRun} from './edit';
 import {RunInfo} from './run-info';
@@ -61,8 +61,8 @@ interface State {
 	titles: Array<string | undefined>;
 	currentRun?: CurrentRun;
 	nextRun?: NextRun;
-  edit?: 'current' | 'next';
-  timer?: Timer;
+	edit?: 'current' | 'next';
+	timer?: Timer;
 }
 
 export class Schedule extends React.Component<{}, State> {
@@ -73,8 +73,8 @@ export class Schedule extends React.Component<{}, State> {
 	public componentDidMount() {
 		scheduleRep.on('change', this.scheduleChangeHandler);
 		currentRunRep.on('change', this.currentRunChangeHandler);
-    nextRunRep.on('change', this.nextRunChangeHandler);
-    timerRep.on('change', this.timerChangeHandler);
+		nextRunRep.on('change', this.nextRunChangeHandler);
+		timerRep.on('change', this.timerChangeHandler);
 	}
 
 	public componentWillUnmount() {
@@ -84,17 +84,20 @@ export class Schedule extends React.Component<{}, State> {
 	}
 
 	public render() {
-    const isRunning = this.state.timer?.timerState === 'Running'
+		const isRunning = this.state.timer?.timerState === 'Running';
 
 		return (
 			<Container>
-        {/* ゲーム切り替え */}
+				{/* ゲーム切り替え */}
 				<SelectionContainer>
 					<Button onClick={movePreviousRun} disabled={isRunning}>
 						<ArrowBack />前
 					</Button>
-          {/* ゲームを指定してジャンプ */}
-					<Typeahead titles={this.state.titles} disabled={isRunning}/>
+					{/* ゲームを指定してジャンプ */}
+					<Typeahead
+						titles={this.state.titles}
+						disabled={isRunning}
+					/>
 					<Button onClick={moveNextRun} disabled={isRunning}>
 						次<ArrowForward />
 					</Button>
@@ -113,7 +116,9 @@ export class Schedule extends React.Component<{}, State> {
 					)}
 				</RunInfoContainer>
 				<EditControls>
-					<Button onClick={this.editCurrentRun}>編集：現在のゲーム</Button>
+					<Button onClick={this.editCurrentRun}>
+						編集：現在のゲーム
+					</Button>
 					<Button onClick={this.editNextRun}>編集：次のゲーム</Button>
 				</EditControls>
 				<EditRun
@@ -158,9 +163,9 @@ export class Schedule extends React.Component<{}, State> {
 
 	private readonly nextRunChangeHandler = (newVal: NextRun) => {
 		this.setState({nextRun: newVal || undefined});
-  };
+	};
 
-  private readonly timerChangeHandler = (newVal: Timer) => {
-    this.setState({ timer: newVal })
-  }
+	private readonly timerChangeHandler = (newVal: Timer) => {
+		this.setState({timer: newVal});
+	};
 }
