@@ -19,9 +19,9 @@ const useStyles = makeStyles({
 	},
 	/** ロゴの位置 */
 	logo: {
-		left: 1020,
-		top: 645,
-		width: 270,
+		top: 150,
+		left: 520,
+		width: 250,
 		position: 'absolute',
 	},
 	/** 走者名1P */
