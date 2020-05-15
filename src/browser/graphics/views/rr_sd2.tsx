@@ -118,6 +118,17 @@ const useStyles = makeStyles({
 		fontSize: 26,
 		fontFamily: 'PixelMplus10',
 	},
+	starEffect: {
+		animation: '$round-get 1 0.5s linear',
+	},
+	'@keyframes round-get': {
+		'0%': {
+			transform: 'scale(3,3)',
+		},
+		'100%': {
+			transform: 'scale(1,1)',
+		},
+	},
 });
 
 const currentRunRep = nodecg.Replicant('current-run');
@@ -200,11 +211,25 @@ const App: React.SFC = () => {
 		let dom = [];
 
 		for (let i = 0; i < round; i++) {
-			dom.push(<img key={i} src={star} width={30} />);
+			dom.push(
+				<img
+					key={i}
+					src={star}
+					width={30}
+					className={classes.starEffect}
+				/>,
+			);
 		}
 
 		return <>{dom.map((a) => a)}</>;
 	};
+
+	const commentators =
+		runners?.commentators
+			.map((commentator) => {
+				return `${commentator.name}`;
+			})
+			.join('　') ?? '';
 
 	return (
 		<div className={classes.root}>
@@ -290,10 +315,20 @@ const App: React.SFC = () => {
 			{/* 解説 */}
 			<div className={classes.commentatorArea}>
 				<div className={classes.commentatorLabel}>COMMENTATOR</div>
-				<div className={classes.commentators}>
-					{runners?.commentators.map((commentator) => {
-						return `${commentator.name}　`;
-					})}
+				<div
+					className={classes.commentators}
+					style={{
+						fontSize: calcWidthFitFontSize(
+							commentators ?? '',
+							400,
+							12,
+							22,
+							'px',
+							'PixelMplus10',
+						),
+					}}
+				>
+					{commentators}
 				</div>
 			</div>
 
