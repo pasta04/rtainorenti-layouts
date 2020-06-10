@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 	loadingArea: {
 		position: 'absolute',
 		top: 330,
-		left: 335,
+		left: 360,
 		fontSize: 81,
 		fontFamily: 'PressStart2P',
 	},
