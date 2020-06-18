@@ -73,8 +73,8 @@ export const twitch = (nodecg: NodeCG) => {
 				return;
 			}
 			// RTA Racing用
-			const genre = newRun.raceGenre ? newRun.raceGenre : '';
-			const newTitle = `【${genre}】${newRun.title} ${
+			const genre = newRun.raceGenre ? `【${newRun.raceGenre}】` : '';
+			const newTitle = `${genre}${newRun.title} ${
 				newRun.category
 			} (${newRun.runners.map((runner) => runner.name).join('/')})`;
 			console.log(newTitle);
