@@ -12,6 +12,7 @@ export type NextRun = null | {
 	englishTitle: string;
 	category?: string;
 	platform?: string;
+	raceGenre?: string;
 	runDuration: string;
 	setupDuration: string;
 	runners: {

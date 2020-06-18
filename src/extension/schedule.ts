@@ -34,6 +34,7 @@ export default async (nodecg: NodeCG) => {
 	const fetchSpreadsheet = async () => {
 		const res = await sheetsApi.spreadsheets.values.batchGet({
 			spreadsheetId,
+			// 取得対象のシート名
 			ranges: ['ゲーム', '走者', '解説', 'トーナメント'],
 		});
 		const sheetValues = res.data.valueRanges;
@@ -225,11 +226,13 @@ export default async (nodecg: NodeCG) => {
 						});
 					}
 				}
+
 				return {
 					pk: Number(run.id),
 					index,
 					title: run.title,
 					englishTitle: run['title english'],
+					raceGenre: run['レースジャンル'],
 					category: run.category,
 					platform: run.platform,
 					runDuration: run.runDuration,

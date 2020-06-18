@@ -5,7 +5,7 @@ import {CurrentRun} from '../nodecg/replicants';
 
 export const twitch = (nodecg: NodeCG) => {
 	const OUR_CHANNEL = nodecg.bundleConfig.twitchId;
-	const CHANNEL_TITLE_PREFIX = nodecg.bundleConfig.broadcastTitlePrefix;
+	// const CHANNEL_TITLE_PREFIX = nodecg.bundleConfig.broadcastTitlePrefix;
 
 	const log = new nodecg.Logger('twitch');
 	if (
@@ -72,7 +72,14 @@ export const twitch = (nodecg: NodeCG) => {
 				);
 				return;
 			}
-			const newTitle = `${CHANNEL_TITLE_PREFIX}${newRun.title}`;
+			// RTA Racing用
+			const genre = newRun.raceGenre ? newRun.raceGenre : '';
+			const newTitle = `【${genre}】${newRun.title} ${
+				newRun.category
+			} (${newRun.runners.map((runner) => runner.name).join('/')})`;
+			console.log(newTitle);
+			// RTA in 俺んち用
+			// const newTitle = `${CHANNEL_TITLE_PREFIX}${newRun.title}`;
 			if (lastUpdateTitle === newTitle) {
 				return;
 			}
