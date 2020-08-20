@@ -210,6 +210,11 @@
 				"file": "rr_sd4.html",
 				"width": 1280,
 				"height": 729
+			},
+			{
+				"file": "smb.html",
+				"width": 1280,
+				"height": 729
 			}
 		],
 		"assetCategories": [
