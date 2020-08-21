@@ -20,6 +20,9 @@ type Props = {
 	fontSize: number;
 	color?: string;
 	type?: 'multiline' | 'line';
+	padding?: string | number;
+	backgroundColor?: string;
+	borderRadius?: string | number;
 };
 
 export const Clock: React.SFC<Props> = (props: Props) => {

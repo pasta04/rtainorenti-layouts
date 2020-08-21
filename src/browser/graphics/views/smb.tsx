@@ -156,13 +156,13 @@ const App: React.SFC = () => {
 			// 映像の領域を切り取り
 			ctx.globalCompositeOperation = 'xor';
 
-			const gameW = 616;
-			const gameH = 470;
+			const gameW = 618;
+			const gameH = 466;
 
 			// ゲーム1
-			ctx.fillRect(12, 97, gameW, gameH);
+			ctx.fillRect(11, 97, gameW, gameH);
 			// ゲーム2
-			ctx.fillRect(12 + 23 + gameW + 1, 97, gameW, gameH);
+			ctx.fillRect(11 + 21 + gameW + 1, 97, gameW, gameH);
 		});
 	});
 
@@ -247,7 +247,15 @@ const App: React.SFC = () => {
 				</div>
 			</div>
 
-			<Clock fontSize={22} top={665} left={10} />
+			<Clock
+				fontSize={22}
+				top={655}
+				left={10}
+				color={'yellow'}
+				backgroundColor={'#994e00'}
+				padding={5}
+				borderRadius={5}
+			/>
 
 			<img className={classes.logo} src={logo} />
 
