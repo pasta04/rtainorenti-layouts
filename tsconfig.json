@@ -5,6 +5,8 @@
 		"lib": ["esnext"],
 		"types": [],
 		"sourceMap": true,
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"noUnusedParameters": false
 	}
 }

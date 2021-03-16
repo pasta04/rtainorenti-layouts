@@ -3,14 +3,17 @@ import '../styles/common.css';
 import React from 'react';
 import ReactDom from 'react-dom';
 import {makeStyles} from '@material-ui/core';
-import logo from '../images/logo/logo-rr.png';
+import logo from '../images/logo/R2_1.png';
 import BackgroundImage from '../images/background/background-rr.png';
-import {CurrentRun} from '../../../nodecg/replicants';
+import {CurrentRun, TournamentCurrent} from '../../../nodecg/replicants';
 import {calcWidthFitFontSize} from '../../util';
 import {Clock} from '../components/clock';
+import star from '../images/icon/star.png';
 
 const SCREEN_WIDTH = 1280;
 const SCREEN_HEIGHT = 720;
+const RUNNER_FONT_MIN = 14;
+const RUNNER_FONT_MAX = 35;
 
 const useStyles = makeStyles({
 	root: {
@@ -19,16 +22,16 @@ const useStyles = makeStyles({
 	},
 	/** ロゴの位置 */
 	logo: {
-		top: 150,
-		left: 520,
-		width: 250,
+		top: 75,
+		left: 515,
+		width: 220,
 		position: 'absolute',
 	},
 	/** 走者名1P */
 	runInfoArea1p: {
 		position: 'absolute',
 		top: 55,
-		left: 445,
+		left: 450,
 		color: 'blue',
 		fontSize: 35,
 		width: 350,
@@ -38,7 +41,7 @@ const useStyles = makeStyles({
 	runInfoArea2p: {
 		position: 'absolute',
 		top: 270,
-		left: 490,
+		left: 485,
 		color: 'blue',
 		fontSize: 35,
 		textAlign: 'right',
@@ -48,7 +51,7 @@ const useStyles = makeStyles({
 	runInfoArea3p: {
 		position: 'absolute',
 		top: 410,
-		left: 445,
+		left: 450,
 		color: 'blue',
 		fontSize: 35,
 		textAlign: 'left',
@@ -58,7 +61,7 @@ const useStyles = makeStyles({
 	runInfoArea4p: {
 		position: 'absolute',
 		top: 630,
-		left: 490,
+		left: 485,
 		color: 'blue',
 		fontSize: 35,
 		textAlign: 'right',
@@ -68,10 +71,14 @@ const useStyles = makeStyles({
 	/** ゲーム名エリア */
 	gameArea: {
 		// height: 65,
+		maxWidth: 320,
+		wordBreak: 'break-word',
 	},
 	/** カテゴリ名エリア */
 	categoryArea: {
 		// width: 650,
+		maxWidth: 320,
+		wordBreak: 'break-word',
 	},
 	/** ラベル */
 	runInfoLabel: {
@@ -99,6 +106,9 @@ const useStyles = makeStyles({
 		top: 555,
 		left: 475,
 		color: 'green',
+		maxWidth: 320,
+		wordBreak: 'break-word',
+		marginTop: 5,
 	},
 	/** 解説者のラベル */
 	commentatorLabel: {
@@ -116,9 +126,49 @@ const useStyles = makeStyles({
 	hidden: {
 		visibility: 'hidden',
 	},
+	starEffect: {
+		animation: '$round-get 1 0.5s linear',
+	},
+	'@keyframes round-get': {
+		'0%': {
+			transform: 'scale(3,3)',
+		},
+		'100%': {
+			transform: 'scale(1,1)',
+		},
+	},
+	round1p: {
+		position: 'absolute',
+		top: 15,
+		left: 620,
+		width: 200,
+		textAlign: 'center',
+	},
+	round2p: {
+		position: 'absolute',
+		top: 320,
+		left: 460,
+		width: 200,
+		textAlign: 'center',
+	},
+	round3p: {
+		position: 'absolute',
+		top: 370,
+		left: 620,
+		width: 200,
+		textAlign: 'center',
+	},
+	round4p: {
+		position: 'absolute',
+		top: 675,
+		left: 460,
+		width: 200,
+		textAlign: 'center',
+	},
 });
 
 const currentRunRep = nodecg.Replicant('current-run');
+const tournamentRep = nodecg.Replicant('tournamentCurrent');
 
 const App: React.SFC = () => {
 	const classes = useStyles({});
@@ -134,6 +184,31 @@ const App: React.SFC = () => {
 			currentRunRep.removeListener('change', runnerHandler);
 		};
 	}, [currentRunRep]);
+
+	const [tournament, setTournament] = React.useState<TournamentCurrent>({
+		title: '',
+		runner1: {
+			round: 0,
+		},
+		runner2: {
+			round: 0,
+		},
+		runner3: {
+			round: 0,
+		},
+		runner4: {
+			round: 0,
+		},
+	});
+	const tournamentHandler = (newVal: TournamentCurrent) => {
+		setTournament(newVal && {...newVal});
+	};
+	React.useEffect(() => {
+		tournamentRep.on('change', tournamentHandler);
+		return () => {
+			tournamentRep.removeListener('change', tournamentHandler);
+		};
+	}, [tournamentRep]);
 
 	// 背景画像
 	React.useEffect(() => {
@@ -179,6 +254,18 @@ const App: React.SFC = () => {
 		});
 	});
 
+	const numToStar = (round: number) => {
+		let dom = [];
+
+		for (let i = 0; i < round; i++) {
+			dom.push(
+				<img key={i} src={star} width={30} className={classes.starEffect} />,
+			);
+		}
+
+		return <>{dom.map((a) => a)}</>;
+	};
+
 	const commentatorNames =
 		runners?.commentators
 			.map((commentator) => {
@@ -208,8 +295,8 @@ const App: React.SFC = () => {
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[0]?.name ?? '',
 							320,
-							12,
-							35,
+							RUNNER_FONT_MIN,
+							RUNNER_FONT_MAX,
 							'px',
 							'PixelMplus10',
 						),
@@ -227,8 +314,8 @@ const App: React.SFC = () => {
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[1]?.name ?? '',
 							320,
-							12,
-							35,
+							RUNNER_FONT_MIN,
+							RUNNER_FONT_MAX,
 							'px',
 							'PixelMplus10',
 						),
@@ -246,8 +333,8 @@ const App: React.SFC = () => {
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[2]?.name ?? '',
 							320,
-							12,
-							35,
+							RUNNER_FONT_MIN,
+							RUNNER_FONT_MAX,
 							'px',
 							'PixelMplus10',
 						),
@@ -265,8 +352,8 @@ const App: React.SFC = () => {
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[3]?.name ?? '',
 							320,
-							12,
-							35,
+							RUNNER_FONT_MIN,
+							RUNNER_FONT_MAX,
 							'px',
 							'PixelMplus10',
 						),
@@ -274,6 +361,27 @@ const App: React.SFC = () => {
 				>
 					{runners?.runners[3]?.name ?? ''}
 				</div>
+			</div>
+
+			{/* ラウンド */}
+			{/* 1P ラウンド */}
+			<div className={classes.round1p}>
+				{numToStar(tournament.runner1.round)}
+			</div>
+
+			{/* 2P ラウンド */}
+			<div className={classes.round2p}>
+				{numToStar(tournament.runner2.round)}
+			</div>
+
+			{/* 3P ラウンド */}
+			<div className={classes.round3p}>
+				{numToStar(tournament.runner3.round)}
+			</div>
+
+			{/* 4P ラウンド */}
+			<div className={classes.round4p}>
+				{numToStar(tournament.runner4.round)}
 			</div>
 
 			{/* ゲーム、カテゴリ */}

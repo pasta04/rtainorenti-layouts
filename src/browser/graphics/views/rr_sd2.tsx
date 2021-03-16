@@ -3,7 +3,7 @@ import '../styles/common.css';
 import React from 'react';
 import ReactDom from 'react-dom';
 import {makeStyles} from '@material-ui/core';
-import logo from '../images/logo/logo-rr.png';
+import logo from '../images/logo/R2_1.png';
 import BackgroundImage from '../images/background/background-rr.png';
 import {CurrentRun, TournamentCurrent} from '../../../nodecg/replicants';
 import {calcWidthFitFontSize} from '../../util';
@@ -21,7 +21,8 @@ const useStyles = makeStyles({
 	/** ロゴの位置 */
 	logo: {
 		position: 'absolute',
-		width: 270,
+		width: 200,
+		top: -55,
 	},
 	/** 走者名1P */
 	runInfoArea1p: {
@@ -30,17 +31,17 @@ const useStyles = makeStyles({
 		left: 200,
 		color: 'blue',
 		fontSize: 30,
-		width: 300,
+		width: 430,
 		height: 90,
 	},
 	/** 走者名2P */
 	runInfoArea2p: {
 		position: 'absolute',
 		top: 560,
-		left: 790,
+		left: 660,
 		color: 'blue',
 		fontSize: 30,
-		width: 300,
+		width: 430,
 		textAlign: 'right',
 		height: 90,
 	},
@@ -78,6 +79,7 @@ const useStyles = makeStyles({
 		top: 670,
 		left: 10,
 		color: 'green',
+		width: 400,
 	},
 	/** 解説者のラベル */
 	commentatorLabel: {
@@ -157,6 +159,12 @@ const App: React.SFC = () => {
 		runner2: {
 			round: 0,
 		},
+		runner3: {
+			round: 0,
+		},
+		runner4: {
+			round: 0,
+		},
 	});
 	const tournamentHandler = (newVal: TournamentCurrent) => {
 		setTournament(newVal && {...newVal});
@@ -198,12 +206,7 @@ const App: React.SFC = () => {
 			// 走者1タイマー
 			ctx.fillRect(10, 90 + gameH, timerW, timerH);
 			// 走者2タイマー
-			ctx.fillRect(
-				SCREEN_WIDTH - timerW - 10,
-				90 + gameH,
-				timerW,
-				timerH,
-			);
+			ctx.fillRect(SCREEN_WIDTH - timerW - 10, 90 + gameH, timerW, timerH);
 		});
 	});
 
@@ -212,12 +215,7 @@ const App: React.SFC = () => {
 
 		for (let i = 0; i < round; i++) {
 			dom.push(
-				<img
-					key={i}
-					src={star}
-					width={30}
-					className={classes.starEffect}
-				/>,
+				<img key={i} src={star} width={30} className={classes.starEffect} />,
 			);
 		}
 

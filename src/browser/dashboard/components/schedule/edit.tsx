@@ -78,11 +78,7 @@ export class EditRun extends React.Component<Props, Run> {
 									label={`走者${index} 名前`}
 									defaultValue={runner.name}
 									onChange={(e) => {
-										this.updateRunnerInfo(
-											index,
-											'name',
-											e.currentTarget.value,
-										);
+										this.updateRunnerInfo(index, 'name', e.currentTarget.value);
 									}}
 								/>
 								<TextField
@@ -100,11 +96,7 @@ export class EditRun extends React.Component<Props, Run> {
 									label={`走者${index} ニコ生`}
 									defaultValue={runner.nico}
 									onChange={(e) => {
-										this.updateRunnerInfo(
-											index,
-											'nico',
-											e.currentTarget.value,
-										);
+										this.updateRunnerInfo(index, 'nico', e.currentTarget.value);
 									}}
 								/>
 								<TextField
@@ -124,7 +116,7 @@ export class EditRun extends React.Component<Props, Run> {
 					{new Array(4).fill(null).map((_, index) => {
 						const commentator: Participant = {
 							name: '',
-							...commentators[index],
+							...(commentators[index] as Partial<typeof commentators[0]>),
 						};
 						return (
 							<div key={index}>

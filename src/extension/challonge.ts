@@ -115,6 +115,12 @@ export const tournamentCurrent = (nodecg: NodeCG) => {
 			runner2: {
 				round: 0,
 			},
+			runner3: {
+				round: 0,
+			},
+			runner4: {
+				round: 0,
+			},
 		},
 	});
 
@@ -130,16 +136,16 @@ export const tournamentCurrent = (nodecg: NodeCG) => {
 		rep.value = {
 			...rep.value,
 			runner1: {
-				round:
-					payload.index === 0
-						? payload.round
-						: rep.value.runner1.round,
+				round: payload.index === 0 ? payload.round : rep.value.runner1.round,
 			},
 			runner2: {
-				round:
-					payload.index === 1
-						? payload.round
-						: rep.value.runner2.round,
+				round: payload.index === 1 ? payload.round : rep.value.runner2.round,
+			},
+			runner3: {
+				round: payload.index === 2 ? payload.round : rep.value.runner3.round,
+			},
+			runner4: {
+				round: payload.index === 3 ? payload.round : rep.value.runner4.round,
 			},
 		};
 	};

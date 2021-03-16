@@ -19,7 +19,7 @@ const nextRunRep = nodecg.Replicant('next-run');
 const scheduleRep = nodecg.Replicant('schedule');
 const timerRep = nodecg.Replicant('timer');
 
-const Container = styled(BorderedBox)`
+const Container = styled(BorderedBox as any)`
 	height: calc(100vh - 32px);
 	padding: 16px;
 	display: grid;
@@ -94,10 +94,7 @@ export class Schedule extends React.Component<{}, State> {
 						<ArrowBack />前
 					</Button>
 					{/* ゲームを指定してジャンプ */}
-					<Typeahead
-						titles={this.state.titles}
-						disabled={isRunning}
-					/>
+					<Typeahead titles={this.state.titles} disabled={isRunning} />
 					<Button onClick={moveNextRun} disabled={isRunning}>
 						次<ArrowForward />
 					</Button>
@@ -105,10 +102,7 @@ export class Schedule extends React.Component<{}, State> {
 
 				<RunInfoContainer>
 					{this.state.currentRun && (
-						<RunInfo
-							run={this.state.currentRun}
-							label='現在のゲーム'
-						/>
+						<RunInfo run={this.state.currentRun} label='現在のゲーム' />
 					)}
 					<Divider />
 					{this.state.nextRun && (
@@ -116,9 +110,7 @@ export class Schedule extends React.Component<{}, State> {
 					)}
 				</RunInfoContainer>
 				<EditControls>
-					<Button onClick={this.editCurrentRun}>
-						編集：現在のゲーム
-					</Button>
+					<Button onClick={this.editCurrentRun}>編集：現在のゲーム</Button>
 					<Button onClick={this.editNextRun}>編集：次のゲーム</Button>
 				</EditControls>
 				<EditRun

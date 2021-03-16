@@ -24,7 +24,7 @@ const Column = styled.div`
 	grid-gap: 16px;
 `;
 
-const LeftColumn = styled(Column)`
+const LeftColumn = styled(Column as any)`
 	height: calc(100vh - 32px);
 	grid-template-rows: 1fr auto;
 `;

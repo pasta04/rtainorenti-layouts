@@ -21,13 +21,13 @@ const useStyles = makeStyles({
 	/** ロゴの位置 */
 	logo: {
 		position: 'absolute',
-		width: 200,
-		top: -55,
+		width: 325,
+		top: -90,
 	},
 	/** 走者名1P */
 	runInfoArea1p: {
 		position: 'absolute',
-		top: 560,
+		top: 165,
 		left: 200,
 		color: 'blue',
 		fontSize: 30,
@@ -37,13 +37,21 @@ const useStyles = makeStyles({
 	/** 走者名2P */
 	runInfoArea2p: {
 		position: 'absolute',
-		top: 560,
+		top: 165,
 		left: 660,
 		color: 'blue',
 		fontSize: 30,
 		width: 430,
 		textAlign: 'right',
 		height: 90,
+	},
+	/** ゲーム名エリア */
+	gameArea: {
+		height: 65,
+	},
+	/** カテゴリ名エリア */
+	categoryArea: {
+		width: 650,
 	},
 	/** ラベル */
 	runInfoLabel: {
@@ -60,12 +68,18 @@ const useStyles = makeStyles({
 		paddingRight: '1em',
 		fontFamily: 'PixelMplus10',
 	},
+	/** ゲーム名とカテゴリ名 */
+	gameValue: {
+		paddingLeft: '3em',
+		fontFamily: 'PixelMplus10',
+	},
 	/** 解説者エリア */
 	commentatorArea: {
 		position: 'absolute',
 		top: 670,
 		left: 10,
 		color: 'green',
+		width: 400,
 	},
 	/** 解説者のラベル */
 	commentatorLabel: {
@@ -85,14 +99,14 @@ const useStyles = makeStyles({
 	},
 	round1p: {
 		position: 'absolute',
-		top: 600,
+		top: 125,
 		left: 10,
 		width: 200,
 		textAlign: 'center',
 	},
 	round2p: {
 		position: 'absolute',
-		top: 600,
+		top: 125,
 		left: 1070,
 		width: 200,
 		textAlign: 'center',
@@ -180,19 +194,19 @@ const App: React.SFC = () => {
 			ctx.globalCompositeOperation = 'xor';
 
 			const gameW = 620;
-			const gameH = 465;
-
-			// ゲーム1
-			ctx.fillRect(10, 90, gameW, gameH);
-			// ゲーム2
-			ctx.fillRect(10 * 2 + 10 + gameW, 90, gameW, gameH);
-
+			const gameH = 349;
 			const timerW = 200;
 			const timerH = 40;
+
+			// ゲーム1
+			ctx.fillRect(10, 205, gameW, gameH);
+			// ゲーム2
+			ctx.fillRect(650, 205, gameW, gameH);
+
 			// 走者1タイマー
-			ctx.fillRect(10, 90 + gameH, timerW, timerH);
+			ctx.fillRect(10, 165, timerW, timerH);
 			// 走者2タイマー
-			ctx.fillRect(SCREEN_WIDTH - timerW - 10, 90 + gameH, timerW, timerH);
+			ctx.fillRect(1070, 165, timerW, timerH);
 		});
 	});
 
@@ -246,6 +260,46 @@ const App: React.SFC = () => {
 			{/* ラウンド表示 */}
 			<div className={classes.roundTitle}>{tournament.title}</div>
 
+			{/* ゲーム、カテゴリ */}
+			<div style={{position: 'absolute', left: 440, top: 570}}>
+				<div className={classes.gameArea}>
+					<div className={classes.runInfoLabel}>GAME</div>
+					<div
+						className={classes.gameValue}
+						style={{
+							fontSize: calcWidthFitFontSize(
+								runners?.title ?? '',
+								600,
+								12,
+								22,
+								'px',
+								'PixelMplus10',
+							),
+						}}
+					>
+						{runners?.title}
+					</div>
+				</div>
+				<div className={classes.categoryArea}>
+					<div className={classes.runInfoLabel}>CATEGORY</div>
+					<div
+						className={classes.gameValue}
+						style={{
+							fontSize: calcWidthFitFontSize(
+								runners?.category ?? '',
+								600,
+								12,
+								22,
+								'px',
+								'PixelMplus10',
+							),
+						}}
+					>
+						{runners?.category}
+					</div>
+				</div>
+			</div>
+
 			{/* 1P ラウンド */}
 			<div className={classes.round1p}>
 				{numToStar(tournament.runner1.round)}
@@ -264,7 +318,7 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							commentators ?? '',
-							400,
+							420,
 							12,
 							22,
 							'px',
@@ -287,4 +341,4 @@ const App: React.SFC = () => {
 	);
 };
 
-ReactDom.render(<App />, document.getElementById('rr_sd2_general'));
+ReactDom.render(<App />, document.getElementById('rr_hd2'));

@@ -62,6 +62,12 @@ const App: React.SFC = () => {
 		runner2: {
 			round: 0,
 		},
+		runner3: {
+			round: 0,
+		},
+		runner4: {
+			round: 0,
+		},
 	});
 	const [matchTitle, setMatchTitle] = React.useState<string>('');
 	const [matchTitleList, setMatchTitleList] = React.useState<
@@ -204,6 +210,36 @@ const App: React.SFC = () => {
 		});
 	};
 
+	const handle3PMinus = () => {
+		if (tournament.runner3.round <= 0) return;
+
+		nodecg.sendMessage('editMatchRound', {
+			index: 2,
+			round: tournament.runner3.round - 1,
+		});
+	};
+	const handle3PPlus = () => {
+		nodecg.sendMessage('editMatchRound', {
+			index: 2,
+			round: tournament.runner3.round + 1,
+		});
+	};
+
+	const handle4PMinus = () => {
+		if (tournament.runner4.round <= 0) return;
+
+		nodecg.sendMessage('editMatchRound', {
+			index: 3,
+			round: tournament.runner4.round - 1,
+		});
+	};
+	const handle4PPlus = () => {
+		nodecg.sendMessage('editMatchRound', {
+			index: 3,
+			round: tournament.runner4.round + 1,
+		});
+	};
+
 	return (
 		<div>
 			{/* データの取得 */}
@@ -231,9 +267,7 @@ const App: React.SFC = () => {
 
 			{/*  トーナメントタイトル */}
 			<Paper className={classes.paper}>
-				<Typography variant={'h4'}>
-					{challonge.tournamentName}
-				</Typography>
+				<Typography variant={'h4'}>{challonge.tournamentName}</Typography>
 			</Paper>
 
 			{/* タイトル入力 */}
@@ -292,9 +326,7 @@ const App: React.SFC = () => {
 				</div>
 				{/* 表示中 */}
 				<div>
-					<Typography variant={'h6'}>
-						【表示中】{tournament.title}
-					</Typography>
+					<Typography variant={'h6'}>【表示中】{tournament.title}</Typography>
 				</div>
 			</Paper>
 
@@ -313,18 +345,12 @@ const App: React.SFC = () => {
 						</MenuItem>
 
 						{challonge.data.map((data, index) => {
-							const prefix =
-								data.match.round < 0 ? '敗者復活' : '';
-							const text = `${prefix}${Math.abs(
-								data.match.round,
-							)}回戦 ${data.match.player1_name ??
-								'★未定★'} vs ${data.match.player2_name ??
+							const prefix = data.match.round < 0 ? '敗者復活' : '';
+							const text = `${prefix}${Math.abs(data.match.round)}回戦 ${data
+								.match.player1_name ?? '★未定★'} vs ${data.match.player2_name ??
 								'★未定★'}`;
 							return (
-								<MenuItem
-									key={`${text}_${index}`}
-									value={index + 1}
-								>
+								<MenuItem key={`${text}_${index}`} value={index + 1}>
 									{text}
 								</MenuItem>
 							);
@@ -384,6 +410,50 @@ const App: React.SFC = () => {
 							variant={'contained'}
 							size={'small'}
 							onClick={handle2PPlus}
+						>
+							<PlusIcon />
+						</Button>
+					</div>
+
+					{/* 3P */}
+					<div className={classes.roundInfo}>
+						3P
+						<Button
+							className={classes.miniButton}
+							variant={'contained'}
+							size={'small'}
+							onClick={handle3PMinus}
+						>
+							<MinusIcon />
+						</Button>
+						<span>{tournament.runner3.round}</span>
+						<Button
+							className={classes.miniButton}
+							variant={'contained'}
+							size={'small'}
+							onClick={handle3PPlus}
+						>
+							<PlusIcon />
+						</Button>
+					</div>
+
+					{/* 4P */}
+					<div className={classes.roundInfo}>
+						4P
+						<Button
+							className={classes.miniButton}
+							variant={'contained'}
+							size={'small'}
+							onClick={handle4PMinus}
+						>
+							<MinusIcon />
+						</Button>
+						<span>{tournament.runner4.round}</span>
+						<Button
+							className={classes.miniButton}
+							variant={'contained'}
+							size={'small'}
+							onClick={handle4PPlus}
 						>
 							<PlusIcon />
 						</Button>

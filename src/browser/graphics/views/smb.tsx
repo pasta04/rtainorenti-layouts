@@ -128,6 +128,12 @@ const App: React.SFC = () => {
 		runner2: {
 			round: 0,
 		},
+		runner3: {
+			round: 0,
+		},
+		runner4: {
+			round: 0,
+		},
 	});
 	const tournamentHandler = (newVal: TournamentCurrent) => {
 		setTournament(newVal && {...newVal});
@@ -178,10 +184,7 @@ const App: React.SFC = () => {
 			{/* 走者情報 */}
 			{/* 1P */}
 			<div
-				className={classnames(
-					classes.runInfoArea,
-					classes.runInfoArea1p,
-				)}
+				className={classnames(classes.runInfoArea, classes.runInfoArea1p)}
 				style={{
 					fontSize: calcWidthFitFontSize(
 						runners?.runners[0]?.name ?? '',
@@ -200,10 +203,7 @@ const App: React.SFC = () => {
 
 			{/* 2P */}
 			<div
-				className={classnames(
-					classes.runInfoArea,
-					classes.runInfoArea2p,
-				)}
+				className={classnames(classes.runInfoArea, classes.runInfoArea2p)}
 				style={{
 					fontSize: calcWidthFitFontSize(
 						runners?.runners[1]?.name ?? '',
@@ -222,9 +222,7 @@ const App: React.SFC = () => {
 
 			{/* 何回戦の情報 */}
 			<div className={classes.matchTitleArea}>
-				<div className={classes.matchTitle}>
-					{tournament?.title ?? ''}
-				</div>
+				<div className={classes.matchTitle}>{tournament?.title ?? ''}</div>
 			</div>
 
 			{/* 解説 */}

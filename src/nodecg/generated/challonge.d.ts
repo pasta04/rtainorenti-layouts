@@ -32,4 +32,12 @@ export type TournamentCurrent = {
 	runner2: {
 		round: number;
 	};
+	/** プレイヤー3のラウンド取得数 */
+	runner3: {
+		round: number;
+	};
+	/** プレイヤー4のラウンド取得数 */
+	runner4: {
+		round: number;
+	};
 };

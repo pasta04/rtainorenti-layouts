@@ -20,7 +20,7 @@ const checklistRep = nodecg.Replicant('checklist');
 const currentRunRep = nodecg.Replicant('current-run');
 const timerRep = nodecg.Replicant('timer');
 
-const Container = styled(BorderedBox)`
+const Container = styled(BorderedBox as any)`
 	display: grid;
 	grid-template-columns: 1fr auto;
 	grid-template-rows: 105px 1fr;
@@ -192,8 +192,7 @@ export class Timekeeper extends React.Component<{}, State> {
 		const newRunners = newVal.runners;
 		this.setState({
 			runners: Array.from({length: 4}, (_, index) => {
-				const name =
-					newRunners && newRunners[index] && newRunners[index].name;
+				const name = newRunners && newRunners[index] && newRunners[index].name;
 				return {name, id: uuidv4()};
 			}),
 		});

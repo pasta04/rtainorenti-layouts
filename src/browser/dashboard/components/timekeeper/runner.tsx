@@ -11,7 +11,7 @@ import {Timer} from '../../../../nodecg/replicants';
 import {ColoredButton} from '../lib/colored-button';
 import {EditTimeModal} from './edit';
 
-const Container = styled.div`
+const Container = (styled as any).div`
 	padding: 0 16px;
 	display: grid;
 	align-items: center;
@@ -32,7 +32,7 @@ const RunnerName = styled.div`
 	font-size: 24px;
 `;
 
-const RunnerStatus = styled.div`
+const RunnerStatus = (styled as any).div`
 	font-size: 24px;
 	color: #adadad;
 	${(props: {finished: boolean}) =>
@@ -72,9 +72,7 @@ export class Runner extends React.Component<Props, State> {
 
 	public render() {
 		return (
-			<Container index={this.props.index}>
-				{this.renderContent()}
-			</Container>
+			<Container index={this.props.index}>{this.renderContent()}</Container>
 		);
 	}
 
@@ -96,9 +94,7 @@ export class Runner extends React.Component<Props, State> {
 			<RunnerContainer>
 				<div>
 					<RunnerName>{props.runner}</RunnerName>
-					<RunnerStatus finished={!shouldShowFinish}>
-						{status}
-					</RunnerStatus>
+					<RunnerStatus finished={!shouldShowFinish}>{status}</RunnerStatus>
 				</div>
 				<ButtonContainer>
 					{shouldShowFinish && (
