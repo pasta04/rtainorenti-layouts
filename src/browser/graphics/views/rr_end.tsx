@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import ReactDom from 'react-dom';
 import {makeStyles} from '@material-ui/core';
 import useInterval from '@use-it/interval';
-import logo from '../images/logo/logo-rr.png';
+import logo from '../images/logo/R2_1.png';
 import BackgroundImage from '../images/background/background-rr.png';
 
 const SCREEN_WIDTH = 1280;
@@ -18,7 +18,8 @@ const useStyles = makeStyles(() => ({
 	},
 	logo: {
 		position: 'absolute',
-		width: 370,
+		width: 340,
+		top: -100,
 	},
 	loadingArea: {
 		position: 'absolute',
