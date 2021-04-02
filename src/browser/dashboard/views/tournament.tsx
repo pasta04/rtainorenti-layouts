@@ -240,6 +240,31 @@ const App: React.SFC = () => {
 		});
 	};
 
+	const resetAll = () => {
+		const res = confirm('ラウンド数をリセットします。よろしいですか。');
+		if (!res) return;
+
+		nodecg.sendMessage('editMatchRound', {
+			index: 0,
+			round: 0,
+		});
+
+		nodecg.sendMessage('editMatchRound', {
+			index: 1,
+			round: 0,
+		});
+
+		nodecg.sendMessage('editMatchRound', {
+			index: 2,
+			round: 0,
+		});
+
+		nodecg.sendMessage('editMatchRound', {
+			index: 3,
+			round: 0,
+		});
+	};
+
 	return (
 		<div>
 			{/* データの取得 */}
@@ -456,6 +481,18 @@ const App: React.SFC = () => {
 							onClick={handle4PPlus}
 						>
 							<PlusIcon />
+						</Button>
+					</div>
+
+					{/* リセットボタン */}
+					<div className={classes.roundInfo} style={{marginLeft: 30}}>
+						<Button
+							// className={classes.miniButton}
+							variant={'contained'}
+							size={'small'}
+							onClick={resetAll}
+						>
+							リセット
 						</Button>
 					</div>
 				</div>
