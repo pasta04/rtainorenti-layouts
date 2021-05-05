@@ -12,6 +12,8 @@ import star from '../images/icon/star.png';
 
 const SCREEN_WIDTH = 1280;
 const SCREEN_HEIGHT = 720;
+const RUNNER_FONT_MIN = 14;
+const RUNNER_FONT_MAX = 32;
 
 const useStyles = makeStyles({
 	root: {
@@ -20,40 +22,40 @@ const useStyles = makeStyles({
 	},
 	/** ロゴの位置 */
 	logo: {
-		top: 230,
-		left: 760,
-		width: 440,
+		top: 510,
+		right: 10,
+		width: 300,
 		position: 'absolute',
 	},
 	/** 走者名1P */
 	runInfoArea1p: {
 		position: 'absolute',
 		top: 55,
-		left: 450,
+		left: 535,
 		color: 'blue',
 		fontSize: 35,
-		width: 350,
+		width: 200,
 		height: 90,
 	},
 	/** 走者名2P */
 	runInfoArea2p: {
 		position: 'absolute',
-		top: 185,
-		left: 485,
+		top: 220,
+		left: 545,
 		color: 'blue',
 		fontSize: 35,
 		textAlign: 'right',
-		width: 350,
+		width: 200,
 		height: 90,
 	},
 	runInfoArea3p: {
 		position: 'absolute',
-		top: 325,
-		left: 450,
+		top: 360,
+		left: 535,
 		color: 'blue',
 		fontSize: 35,
 		textAlign: 'left',
-		width: 350,
+		width: 200,
 		height: 90,
 	},
 	/** ゲーム名エリア */
@@ -72,12 +74,10 @@ const useStyles = makeStyles({
 	},
 	/** 走者名ラベル1P */
 	runInfoValue1p: {
-		paddingLeft: 35,
 		fontFamily: 'PixelMplus10',
 	},
 	/** 走者名ラベル2P */
 	runInfoValue2p: {
-		paddingRight: 35,
 		fontFamily: 'PixelMplus10',
 	},
 	/** ゲーム名とカテゴリ名 */
@@ -88,20 +88,21 @@ const useStyles = makeStyles({
 	/** 解説者エリア */
 	commentatorArea: {
 		position: 'absolute',
-		top: 670,
-		left: 10,
+		top: 620,
+		left: 570,
 		color: 'green',
+		width: 470,
 	},
 	/** 解説者のラベル */
 	commentatorLabel: {
 		fontFamily: 'PressStart2P',
-		fontSize: 18,
+		fontSize: 22,
 	},
 	/** 解説者名 */
 	commentators: {
 		fontFamily: 'PixelMplus10',
 		fontSize: 22,
-		marginLeft: '1em',
+		marginLeft: 46,
 		wordBreak: 'keep-all',
 	},
 	/** 見えなくする */
@@ -111,21 +112,21 @@ const useStyles = makeStyles({
 	round1p: {
 		position: 'absolute',
 		top: 95,
-		left: 490,
+		left: 510,
 		width: 200,
 		textAlign: 'center',
 	},
 	round2p: {
 		position: 'absolute',
-		top: 150,
-		left: 600,
+		top: 185,
+		left: 570,
 		width: 200,
 		textAlign: 'center',
 	},
 	round3p: {
 		position: 'absolute',
-		top: 365,
-		left: 490,
+		top: 400,
+		left: 510,
 		width: 200,
 		textAlign: 'center',
 	},
@@ -224,13 +225,13 @@ const App: React.SFC = () => {
 			// 映像の領域を切り取り
 			ctx.globalCompositeOperation = 'xor';
 
-			const gameW = 460;
-			const gameH = 259;
+			const gameW = 520;
+			const gameH = 293;
 			const timerW = 200;
 			const timerH = 40;
 
 			ctx.fillRect(10, 10, gameW, gameH);
-			ctx.fillRect(20 + 330 + gameW, 10, gameW, gameH);
+			ctx.fillRect(750, 10, gameW, gameH);
 			ctx.fillRect(10, 20 + gameH, gameW, gameH);
 
 			// 走者1タイマー
@@ -258,7 +259,7 @@ const App: React.SFC = () => {
 				<img className={classes.logo} src={logo} />
 				<Clock
 					top={690}
-					left={930}
+					left={10}
 					fontSize={18}
 					type={'line'}
 					color={'yellow'}
@@ -273,9 +274,9 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[0]?.name ?? '',
-							320,
-							12,
-							35,
+							200,
+							RUNNER_FONT_MIN,
+							RUNNER_FONT_MAX,
 							'px',
 							'PixelMplus10',
 						),
@@ -292,9 +293,9 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[1]?.name ?? '',
-							320,
-							12,
-							35,
+							200,
+							RUNNER_FONT_MIN,
+							RUNNER_FONT_MAX,
 							'px',
 							'PixelMplus10',
 						),
@@ -311,9 +312,9 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[2]?.name ?? '',
-							320,
-							12,
-							35,
+							200,
+							RUNNER_FONT_MIN,
+							RUNNER_FONT_MAX,
 							'px',
 							'PixelMplus10',
 						),
@@ -340,7 +341,7 @@ const App: React.SFC = () => {
 			</div>
 
 			{/* ゲーム、カテゴリ */}
-			<div style={{position: 'absolute', left: 300, top: 550}}>
+			<div style={{position: 'absolute', left: 570, top: 460}}>
 				<div className={classes.gameArea}>
 					<div className={classes.runInfoLabel}>GAME</div>
 					<div
@@ -387,8 +388,8 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							commentators ?? '',
-							800,
-							12,
+							400,
+							14,
 							22,
 							'px',
 							'PixelMplus10',

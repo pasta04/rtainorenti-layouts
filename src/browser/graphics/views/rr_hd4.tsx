@@ -13,7 +13,7 @@ import star from '../images/icon/star.png';
 const SCREEN_WIDTH = 1280;
 const SCREEN_HEIGHT = 720;
 const RUNNER_FONT_MIN = 14;
-const RUNNER_FONT_MAX = 35;
+const RUNNER_FONT_MAX = 32;
 
 const useStyles = makeStyles({
 	root: {
@@ -22,55 +22,55 @@ const useStyles = makeStyles({
 	},
 	/** ロゴの位置 */
 	logo: {
-		top: 505,
-		left: 1020,
-		width: 250,
+		top: 545,
+		left: 1030,
+		width: 245,
 		position: 'absolute',
 	},
 	/** 走者名1P */
 	runInfoArea1p: {
 		position: 'absolute',
 		top: 55,
-		left: 450,
+		left: 535,
 		color: 'blue',
 		fontSize: 35,
-		width: 350,
+		width: 200,
 		height: 90,
 	},
 	/** 走者名2P */
 	runInfoArea2p: {
 		position: 'absolute',
-		top: 185,
-		left: 485,
+		top: 220,
+		left: 545,
 		color: 'blue',
 		fontSize: 35,
 		textAlign: 'right',
-		width: 350,
+		width: 200,
 		height: 90,
 	},
 	runInfoArea3p: {
 		position: 'absolute',
-		top: 325,
-		left: 450,
+		top: 360,
+		left: 535,
 		color: 'blue',
 		fontSize: 35,
 		textAlign: 'left',
-		width: 350,
+		width: 200,
 		height: 90,
 	},
 	runInfoArea4p: {
 		position: 'absolute',
-		top: 455,
-		left: 490,
+		top: 520,
+		left: 545,
 		color: 'blue',
 		fontSize: 35,
 		textAlign: 'right',
-		width: 350,
+		width: 200,
 		height: 90,
 	},
 	/** ゲーム名エリア */
 	gameArea: {
-		height: 65,
+		height: 50,
 		maxWidth: 730,
 	},
 	/** カテゴリ名エリア */
@@ -80,16 +80,14 @@ const useStyles = makeStyles({
 	/** ラベル */
 	runInfoLabel: {
 		fontFamily: 'PressStart2P',
-		fontSize: 22,
+		fontSize: 18,
 	},
 	/** 走者名ラベル1P */
 	runInfoValue1p: {
-		paddingLeft: 35,
 		fontFamily: 'PixelMplus10',
 	},
 	/** 走者名ラベル2P */
 	runInfoValue2p: {
-		paddingRight: 35,
 		fontFamily: 'PixelMplus10',
 	},
 	/** ゲーム名とカテゴリ名 */
@@ -100,8 +98,8 @@ const useStyles = makeStyles({
 	/** 解説者エリア */
 	commentatorArea: {
 		position: 'absolute',
-		top: 670,
-		left: 10,
+		top: 615,
+		left: 480,
 		color: 'green',
 	},
 	/** 解説者のラベル */
@@ -134,28 +132,28 @@ const useStyles = makeStyles({
 	round1p: {
 		position: 'absolute',
 		top: 95,
-		left: 490,
+		left: 510,
 		width: 200,
 		textAlign: 'center',
 	},
 	round2p: {
 		position: 'absolute',
-		top: 150,
-		left: 600,
+		top: 185,
+		left: 570,
 		width: 200,
 		textAlign: 'center',
 	},
 	round3p: {
 		position: 'absolute',
-		top: 365,
-		left: 490,
+		top: 400,
+		left: 510,
 		width: 200,
 		textAlign: 'center',
 	},
 	round4p: {
 		position: 'absolute',
-		top: 425,
-		left: 600,
+		top: 490,
+		left: 570,
 		width: 200,
 		textAlign: 'center',
 	},
@@ -220,16 +218,16 @@ const App: React.SFC = () => {
 			// 映像の領域を切り取り
 			ctx.globalCompositeOperation = 'xor';
 
-			const gameW = 460;
-			const gameH = 259;
+			const gameW = 520;
+			const gameH = 293;
 
 			const timerW = 200;
 			const timerH = 40;
 
 			ctx.fillRect(10, 10, gameW, gameH);
-			ctx.fillRect(20 + 330 + gameW, 10, gameW, gameH);
+			ctx.fillRect(750, 10, gameW, gameH);
 			ctx.fillRect(10, 20 + gameH, gameW, gameH);
-			ctx.fillRect(20 + 330 + gameW, 20 + gameH, gameW, gameH);
+			ctx.fillRect(750, 20 + gameH, gameW, gameH);
 
 			// 走者タイマー
 			// 1P
@@ -277,7 +275,7 @@ const App: React.SFC = () => {
 				<img className={classes.logo} src={logo} />
 				<Clock
 					top={690}
-					left={930}
+					left={480}
 					fontSize={18}
 					type={'line'}
 					color={'yellow'}
@@ -292,7 +290,7 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[0]?.name ?? '',
-							320,
+							200,
 							RUNNER_FONT_MIN,
 							RUNNER_FONT_MAX,
 							'px',
@@ -311,7 +309,7 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[1]?.name ?? '',
-							320,
+							200,
 							RUNNER_FONT_MIN,
 							RUNNER_FONT_MAX,
 							'px',
@@ -330,7 +328,7 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[2]?.name ?? '',
-							320,
+							200,
 							RUNNER_FONT_MIN,
 							RUNNER_FONT_MAX,
 							'px',
@@ -349,7 +347,7 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							runners?.runners[3]?.name ?? '',
-							320,
+							200,
 							RUNNER_FONT_MIN,
 							RUNNER_FONT_MAX,
 							'px',
@@ -383,7 +381,7 @@ const App: React.SFC = () => {
 			</div>
 
 			{/* ゲーム、カテゴリ */}
-			<div style={{position: 'absolute', left: 300, top: 550}}>
+			<div style={{position: 'absolute', left: 50, top: 615}}>
 				<div className={classes.gameArea}>
 					<div className={classes.runInfoLabel}>GAME</div>
 					<div
@@ -391,7 +389,7 @@ const App: React.SFC = () => {
 						style={{
 							fontSize: calcWidthFitFontSize(
 								runners?.title ?? '',
-								700,
+								380,
 								12,
 								22,
 								'px',
@@ -409,7 +407,7 @@ const App: React.SFC = () => {
 						style={{
 							fontSize: calcWidthFitFontSize(
 								runners?.category ?? '',
-								700,
+								380,
 								12,
 								22,
 								'px',
@@ -430,9 +428,9 @@ const App: React.SFC = () => {
 					style={{
 						fontSize: calcWidthFitFontSize(
 							commentators ?? '',
-							800,
-							12,
-							22,
+							530,
+							14,
+							18,
 							'px',
 							'PixelMplus10',
 						),
