@@ -8,3 +8,14 @@ export interface Twitch {
 		refreshAt: number;
 	};
 }
+
+export type TwitchSearchGames = {
+	data: {
+		id: string;
+		name: string;
+		box_art_url: string;
+	}[];
+	pagination: {
+		cursor: string;
+	};
+};

@@ -55,6 +55,7 @@ export const importFromOengus = (nodecg: NodeCG) => {
 		version: 'v4',
 		auth: googleApiKey,
 	});
+
 	/** 解説情報を取得 */
 	const fetchCommentators = async (): Promise<{
 		gameCategory: string;
@@ -111,6 +112,36 @@ export const importFromOengus = (nodecg: NodeCG) => {
 		return rawData3;
 	};
 
+	/** 英語タイトル情報を取得 */
+	const fetchEnglishTitles = async (): Promise<{[game: string]: string}> => {
+		// logger.info('run fetchCommentators');
+
+		const res = await sheetsApi.spreadsheets.values.batchGet({
+			spreadsheetId: spreadsheetId,
+			ranges: ['RRR走者情報'],
+		});
+
+		const sheetValues = res.data.valueRanges;
+		if (!sheetValues || !sheetValues[0] || !sheetValues[0].values) {
+			throw new Error('Could not get values from spreadsheet');
+		}
+		const [labels, ...contents] = sheetValues[0].values;
+		if (!labels) {
+			throw new Error('Could not get values from spreadsheet');
+		}
+		let rawData1 = contents.map((content) => zipObject(labels, content));
+
+		const result: {[title: string]: string} = {};
+		rawData1.map((el) => {
+			const gameCategory = el['ゲーム名'];
+			const englishTitle = el['英語ゲーム名'];
+
+			result[gameCategory] = englishTitle;
+		});
+
+		return result;
+	};
+
 	logger.warn('Using Oengus to import schedule');
 
 	const scheduleRep = nodecg.Replicant('schedule');
@@ -119,9 +150,10 @@ export const importFromOengus = (nodecg: NodeCG) => {
 		try {
 			logger.info('run updateSchedule');
 
-			const [schedule, rawCommentators] = await Promise.all([
+			const [schedule, rawCommentators, englishTitle] = await Promise.all([
 				fetchSchedule(oengusMarathonId),
 				fetchCommentators(),
+				fetchEnglishTitles(),
 			]);
 			logger.info('fetch done');
 
@@ -147,13 +179,15 @@ export const importFromOengus = (nodecg: NodeCG) => {
 					(c) => c.gameCategory === gameCategory,
 				);
 
+				const english = englishTitle[run.gameName];
+
 				// logger.info(run.gameName);
 
 				return {
 					pk: run.id,
 					index,
 					title: run.gameName,
-					englishTitle: '', // TODO: スプレッドシートから取得
+					englishTitle: english ? english : '',
 					category: run.categoryName,
 					platform: run.console,
 					date: run.date,

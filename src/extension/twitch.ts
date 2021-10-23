@@ -2,6 +2,7 @@ import got from 'got';
 import appRootPath from 'app-root-path';
 import {NodeCG} from '../nodecg/nodecg';
 import {CurrentRun} from '../nodecg/replicants';
+import {TwitchSearchGames} from '../nodecg/generated/twitch';
 
 export const twitch = (nodecg: NodeCG) => {
 	const OUR_CHANNEL = nodecg.bundleConfig.twitchId;
@@ -19,8 +20,8 @@ export const twitch = (nodecg: NodeCG) => {
 	}
 
 	const twitchConfig = nodecg.config.login.twitch;
-	if (!twitchConfig.scope.split(' ').includes('channel_editor')) {
-		log.error('Missing channel_editor scope, exiting.');
+	if (!twitchConfig.scope.split(' ').includes('channel:manage:broadcast')) {
+		log.error('Missing channel:manage:broadcast scope, exiting.');
 		return;
 	}
 
@@ -67,9 +68,7 @@ export const twitch = (nodecg: NodeCG) => {
 				return;
 			}
 			if (!twitchRep.value || !twitchRep.value.accessToken) {
-				log.error(
-					'Tried to update Twitch status but missing access token',
-				);
+				log.error('Tried to update Twitch status but missing access token');
 				return;
 			}
 			// RTA Racing用
@@ -83,19 +82,43 @@ export const twitch = (nodecg: NodeCG) => {
 			if (lastUpdateTitle === newTitle) {
 				return;
 			}
-			await got.put(
-				`https://api.twitch.tv/kraken/channels/${twitchRep.value.channelId}`,
+
+			// Twitchゲーム情報のためのゲームIDを取得
+			let twitchGameId = '';
+			if (newRun.englishTitle) {
+				const gameResponse = await got.get(
+					`https://api.twitch.tv/helix/search/categories?query=${newRun.englishTitle}`,
+					{
+						json: true,
+						headers: {
+							Authorization: `Bearer ${twitchRep.value.accessToken}`,
+							'Client-ID': twitchConfig.clientID,
+						},
+					},
+				);
+				const json: TwitchSearchGames = gameResponse.body;
+				const englishTile = json.data.find(
+					(item) => item.name === newRun.englishTitle,
+				);
+				twitchGameId = englishTile ? englishTile.id : '';
+			}
+			if (!twitchGameId) {
+				log.warn(
+					`${newRun.title} (English = ${newRun.englishTitle}) is not found in Twitch Titles`,
+				);
+			}
+
+			await got.patch(
+				`https://api.twitch.tv/helix/channels?broadcaster_id=${twitchRep.value.channelId}`,
 				{
 					json: true,
 					body: {
-						channel: {
-							status: newTitle,
-							game: newRun.englishTitle,
-						},
+						title: newTitle,
+						game_id: twitchGameId,
 					},
 					headers: {
-						Accept: 'application/vnd.twitchtv.v5+json',
-						Authorization: `OAuth ${twitchRep.value.accessToken}`,
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${twitchRep.value.accessToken}`,
 						'Client-ID': twitchConfig.clientID,
 					},
 				},
