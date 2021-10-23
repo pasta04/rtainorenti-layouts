@@ -122,7 +122,7 @@ const App: React.SFC = () => {
 	const editMatchname = () => {
 		const selected =
 			matchTitleSelect > 0
-				? matchTitleList[matchTitleSelect - 1].matchTitle
+				? matchTitleList[matchTitleSelect - 1]?.matchTitle ?? ''
 				: '';
 		const msg = matchTitle ? matchTitle : selected;
 		nodecg.sendMessage('editMatchname', msg);
@@ -162,8 +162,8 @@ const App: React.SFC = () => {
 	const changePlayer = () => {
 		const index = playerSelect - 1;
 		if (0 > index) return;
-		const p1name = challonge.data[index].match.player1_name;
-		const p2name = challonge.data[index].match.player2_name;
+		const p1name = challonge.data[index]?.match.player1_name ?? '';
+		const p2name = challonge.data[index]?.match.player2_name ?? '';
 
 		if (!currentRunRep.value || !p1name || !p2name) return;
 		currentRunRep.value.runners[0] = {
@@ -501,4 +501,4 @@ const App: React.SFC = () => {
 	);
 };
 
-ReactDOM.render(<App />, document.getElementById('tournament'));
+ReactDOM.render(<App />, document.getElementById('root'));

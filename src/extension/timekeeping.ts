@@ -122,9 +122,8 @@ export const timekeeping = (nodecg: NodeCG) => {
 		if (currentRunRep.value.runners === undefined) {
 			return;
 		}
-		const allRunnersFinished = currentRunRep.value.runners.every(
-			(_, index) =>
-				Boolean(timerRep.value && timerRep.value.results[index]),
+		const allRunnersFinished = currentRunRep.value.runners.every((_, index) =>
+			Boolean(timerRep.value && timerRep.value.results[index]),
 		);
 		if (allRunnersFinished) {
 			stop();
@@ -146,7 +145,7 @@ export const timekeeping = (nodecg: NodeCG) => {
 		}
 		const result = timerRep.value.results[data.index];
 		if (result) {
-			result.forfeit = data.forfeit;
+			result['forfeit'] = data.forfeit;
 			recalcPlaces();
 		}
 	};

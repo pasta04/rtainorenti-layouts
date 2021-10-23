@@ -26,7 +26,7 @@ const makeBrowserConfig = (name: string): webpack.Configuration => {
 		entry[path.basename(file, '.tsx')] = file;
 	}
 
-	return merge(base, {
+	const config: webpack.Configuration = {
 		entry,
 		output: {
 			path: path.resolve(__dirname, name),
@@ -37,7 +37,17 @@ const makeBrowserConfig = (name: string): webpack.Configuration => {
 				{
 					test: /\.tsx?$/,
 					loaders: [
-						'babel-loader',
+						{
+							loader: 'babel-loader',
+							options: {
+								presets: ['@babel/preset-env'],
+								plugins: [
+									'babel-plugin-styled-components',
+									'@babel/plugin-proposal-optional-chaining',
+									'@babel/plugin-proposal-nullish-coalescing-operator',
+								],
+							},
+						},
 						{
 							loader: 'ts-loader',
 							options: {
@@ -88,11 +98,8 @@ const makeBrowserConfig = (name: string): webpack.Configuration => {
 			new BundleAnalyzerPlugin({
 				openAnalyzer: false,
 				analyzerMode: 'static',
-				reportFilename: path.resolve(
-					__dirname,
-					`bundle-analyzer/${name}.html`,
-				),
-			}),
+				reportFilename: path.resolve(__dirname, `bundle-analyzer/${name}.html`),
+			}) as any,
 		],
 		optimization: {
 			splitChunks: {
@@ -104,10 +111,12 @@ const makeBrowserConfig = (name: string): webpack.Configuration => {
 				},
 			},
 		},
-	});
+	};
+
+	return merge(base as any, config as any) as any;
 };
 
-const extensionConfig = merge(base, {
+const extensionConfig = merge(base as any, {
 	target: 'node',
 	node: false,
 	entry: path.resolve(__dirname, 'src/extension/index.ts'),
@@ -123,10 +132,7 @@ const extensionConfig = merge(base, {
 				loader: 'ts-loader',
 				options: {
 					transpileOnly: true,
-					configFile: path.resolve(
-						__dirname,
-						'src/extension/tsconfig.json',
-					),
+					configFile: path.resolve(__dirname, 'src/extension/tsconfig.json'),
 				},
 			},
 		],
@@ -137,7 +143,7 @@ const extensionConfig = merge(base, {
 const config: webpack.Configuration[] = [
 	makeBrowserConfig('dashboard'),
 	makeBrowserConfig('graphics'),
-	extensionConfig,
+	extensionConfig as any,
 ];
 
 export default config;

@@ -268,4 +268,4 @@ const App: React.SFC = () => {
 	);
 };
 
-ReactDom.render(<App />, document.getElementById('smb'));
+ReactDom.render(<App />, document.getElementById('root'));

@@ -1,12 +1,25 @@
 {
-	"extends": "@hoishin/tsconfig",
 	"compilerOptions": {
-		"target": "esnext",
-		"lib": ["esnext"],
-		"types": [],
+		"target": "ES2020",
+		"module": "CommonJS",
+		"lib": ["ES2020"],
+		"declaration": true,
 		"sourceMap": true,
+		"importHelpers": true,
 		"resolveJsonModule": true,
+
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": false, // TODO: enable this
+		"noPropertyAccessFromIndexSignature": false,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"noUnusedParameters": false
-	}
+		"forceConsistentCasingInFileNames": true
+	},
+	"useUnknownInCatchVariables": false
 }

@@ -223,4 +223,4 @@ const App: React.SFC = () => {
 	);
 };
 
-ReactDom.render(<App />, document.getElementById('naitou'));
+ReactDom.render(<App />, document.getElementById('root'));

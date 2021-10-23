@@ -61,11 +61,13 @@ export const challonge = (nodecg: NodeCG) => {
 		const matchInfo = await fetchMatch(tournamentId);
 
 		// トーナメント情報と走者情報をマージ
-		const newInfo = matchInfo.map((ma) => {
+		const newInfo: typeof challongeRep.value.data = matchInfo.map((ma) => {
+			const player1_name = playerIdToName[ma.match.player1_id] as string;
+			const player2_name = playerIdToName[ma.match.player2_id] as string;
 			return {
 				match: {
-					player1_name: playerIdToName[ma.match.player1_id],
-					player2_name: playerIdToName[ma.match.player2_id],
+					player1_name,
+					player2_name,
 					...ma.match,
 				},
 			};

@@ -341,4 +341,4 @@ const App: React.SFC = () => {
 	);
 };
 
-ReactDom.render(<App />, document.getElementById('rr_sd2'));
+ReactDom.render(<App />, document.getElementById('root'));

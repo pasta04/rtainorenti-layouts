@@ -161,9 +161,7 @@ const App: React.SFC = () => {
 				<div className={classes.runItemRunners}>
 					<div className={classes.runInfoLabel}>RUNNER</div>
 					<div className={classes.runInfoValue}>
-						{runners?.runners
-							.map((runner) => runner.name)
-							.join('/')}
+						{runners?.runners.map((runner) => runner.name).join('/')}
 					</div>
 				</div>
 				<div className={classes.runItemGame}>
@@ -186,9 +184,7 @@ const App: React.SFC = () => {
 				</div>
 				<div className={classes.runItemGategory}>
 					<div className={classes.runInfoLabel}>CATEGORY</div>
-					<div className={classes.runInfoValue}>
-						{runners?.category}
-					</div>
+					<div className={classes.runInfoValue}>{runners?.category}</div>
 				</div>
 				<div className={classes.runItemTime}>
 					<div className={classes.runInfoLabel}>TIME</div>
@@ -196,21 +192,14 @@ const App: React.SFC = () => {
 				</div>
 				<div className={classes.runItemEst}>
 					<div className={classes.runInfoLabel}>EST　</div>
-					<div className={classes.runInfoValue}>
-						{runners?.runDuration}
-					</div>
+					<div className={classes.runInfoValue}>{runners?.runDuration}</div>
 				</div>
 			</div>
 
 			{/* 背景 */}
-			<canvas
-				ref={canvasRef}
-				id='background'
-				width={1920}
-				height={1080}
-			/>
+			<canvas ref={canvasRef} id='background' width={1920} height={1080} />
 		</div>
 	);
 };
 
-ReactDom.render(<App />, document.getElementById('hd1'));
+ReactDom.render(<App />, document.getElementById('root'));

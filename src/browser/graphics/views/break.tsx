@@ -62,12 +62,7 @@ const Break: React.FunctionComponent = () => {
 		const cameraH = 360;
 
 		// カメラ
-		ctx.fillRect(
-			1920 - cameraW - 10,
-			1080 - cameraH - 10,
-			cameraW,
-			cameraH,
-		);
+		ctx.fillRect(1920 - cameraW - 10, 1080 - cameraH - 10, cameraW, cameraH);
 	});
 
 	useInterval(() => {
@@ -94,10 +89,7 @@ const Break: React.FunctionComponent = () => {
 				<div className={classes.label}>NEXT GAME</div>
 				<div className={classes.item}>{currentRun?.title}</div>
 				<div className={classes.item}>
-					@
-					{currentRun?.runners
-						?.map((runner) => runner.name)
-						.join(' / @')}
+					@{currentRun?.runners?.map((runner) => runner.name).join(' / @')}
 				</div>
 			</div>
 
@@ -105,14 +97,9 @@ const Break: React.FunctionComponent = () => {
 			<div className={classes.loadingArea}>Now Loading{loadingDot}</div>
 
 			{/* 背景 */}
-			<canvas
-				ref={canvasRef}
-				id='background'
-				width={1920}
-				height={1080}
-			/>
+			<canvas ref={canvasRef} id='background' width={1920} height={1080} />
 		</div>
 	);
 };
 
-ReactDom.render(<Break />, document.getElementById('break'));
+ReactDom.render(<Break />, document.getElementById('root'));

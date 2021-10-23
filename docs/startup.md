@@ -46,7 +46,7 @@ Twitchでエラーっぽいメッセージが出るが気にしない。
 ## 設定ファイル
 ★の箇所が要書き換え箇所。
 
-- nodecg.json
+- `nodecg.json`
 ```json:
 {
     "host": "★動作するホスト名、IPアドレス★",
@@ -77,7 +77,7 @@ Twitchでエラーっぽいメッセージが出るが気にしない。
 }
 ```
 
-- rtainorenti-layouts.json
+- `rtainorenti-layouts.json`
 ```json:
 {
   "twitchId": "★チャンネル更新対象のTwitchID★",
@@ -87,7 +87,8 @@ Twitchでエラーっぽいメッセージが出るが気にしない。
     "subtitle": "★左上のロゴ部分の文字列の下に出すサブタイトル的なやつ★(Side Tokyo)"
   },
   "googleApiKey": "★Google APIのAPI Key AIなんちゃら～～って文字★",
-  "spreadsheetId": "★Google SpreadSheetのID★",
+  "oengus": "★OengusのID★",
+  "spreadsheetId": "★解説情報を書いたGoogle SpreadSheetのID★",
   "challongeApiKey": "★Challonge APIのAPI Key★"
 }
 

@@ -451,4 +451,4 @@ const App: React.SFC = () => {
 	);
 };
 
-ReactDom.render(<App />, document.getElementById('rr_hd4'));
+ReactDom.render(<App />, document.getElementById('root'));

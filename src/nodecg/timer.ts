@@ -39,18 +39,18 @@ export const parseSeconds = (timeString: string) => {
 	const timeParts = timeString.split(':').map(Number);
 	if (timeParts.length === 3) {
 		return (
-			Math.floor(timeParts[0] * 3600) +
-			Math.floor(timeParts[1] * 60) +
-			Math.floor(timeParts[2])
+			Math.floor((timeParts[0] || 0) * 3600) +
+			Math.floor((timeParts[1] || 0) * 60) +
+			Math.floor(timeParts[2] || 0)
 		);
 	}
 
 	if (timeParts.length === 2) {
-		return Math.floor(timeParts[0] * 60) + Math.floor(timeParts[1]);
+		return Math.floor((timeParts[0] || 0) * 60) + Math.floor(timeParts[1] || 0);
 	}
 
 	if (timeParts.length === 1) {
-		return Math.floor(timeParts[0]);
+		return Math.floor(timeParts[0] || 0);
 	}
 
 	throw new Error(`Unexpected format of timeString argument: ${timeString}`);

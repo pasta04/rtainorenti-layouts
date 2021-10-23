@@ -1,6 +1,6 @@
 import 'modern-normalize/modern-normalize.css';
 
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import {createTheme} from '@material-ui/core';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import React from 'react';
 import ReactDom from 'react-dom';
@@ -29,7 +29,7 @@ const LeftColumn = styled(Column as any)`
 	grid-template-rows: 1fr auto;
 `;
 
-const appTheme = createMuiTheme({
+const appTheme = createTheme({
 	props: {
 		MuiButton: {
 			variant: 'contained',
@@ -51,4 +51,4 @@ export const App = () => (
 	</MuiThemeProvider>
 );
 
-ReactDom.render(<App />, document.getElementById('tech'));
+ReactDom.render(<App />, document.getElementById('root'));

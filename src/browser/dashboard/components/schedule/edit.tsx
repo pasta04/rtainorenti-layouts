@@ -71,7 +71,7 @@ export class EditRun extends React.Component<Props, Run> {
 						}}
 					/>
 					{Array.from({length: 4}, (_, index) => {
-						const runner: Participant = runners[index] || {};
+						const runner: Participant = runners[index] || {name: ''};
 						return (
 							<div key={index}>
 								<TextField
@@ -198,9 +198,9 @@ export class EditRun extends React.Component<Props, Run> {
 				(max([updatingIndex, state.runners.length - 1]) || 0) + 1;
 			for (let i = 0; i < iterateLength; i++) {
 				if (i === updatingIndex) {
-					newRunners.push(newRunner);
+					newRunners.push(newRunner as Participant);
 				} else {
-					newRunners.push(state.runners[i]);
+					newRunners.push(state.runners[i] as Participant);
 				}
 			}
 			return {runners: newRunners};
@@ -223,9 +223,9 @@ export class EditRun extends React.Component<Props, Run> {
 				(max([updatingIndex, state.commentators.length - 1]) || 0) + 1;
 			for (let i = 0; i < iterateLength; i++) {
 				if (i === updatingIndex) {
-					newOnes.push(newOne);
+					newOnes.push(newOne as Participant);
 				} else {
-					newOnes.push(state.commentators[i]);
+					newOnes.push(state.commentators[i] as Participant);
 				}
 			}
 			return {commentators: newOnes};

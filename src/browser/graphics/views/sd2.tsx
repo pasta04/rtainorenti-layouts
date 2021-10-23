@@ -193,9 +193,7 @@ const App: React.SFC = () => {
 				</div>
 				<div className={classes.runItemGategory}>
 					<div className={classes.runInfoLabel}>CATEGORY</div>
-					<div className={classes.runInfoValue1p}>
-						{runners?.category}
-					</div>
+					<div className={classes.runInfoValue1p}>{runners?.category}</div>
 				</div>
 			</div>
 			<div style={{display: 'flex'}}>
@@ -236,34 +234,23 @@ const App: React.SFC = () => {
 					</div>
 				</div>
 				<div className={classes.runItemTime}>
-					<div
-						className={classes.runInfoLabel}
-						style={{marginRight: 170}}
-					>
+					<div className={classes.runInfoLabel} style={{marginRight: 170}}>
 						TIME
 					</div>
 					<div className={timerClassMain}>{timer?.formatted}</div>
 				</div>
 				<div className={classes.runItemEst}>
 					<div className={classes.runInfoLabel}>EST　</div>
-					<div
-						className={classes.runInfoValue2p}
-						style={{marginRight: -30}}
-					>
+					<div className={classes.runInfoValue2p} style={{marginRight: -30}}>
 						{runners?.runDuration}
 					</div>
 				</div>
 			</div>
 
 			{/* 背景 */}
-			<canvas
-				ref={canvasRef}
-				id='background'
-				width={1920}
-				height={1080}
-			/>
+			<canvas ref={canvasRef} id='background' width={1920} height={1080} />
 		</div>
 	);
 };
 
-ReactDom.render(<App />, document.getElementById('sd2'));
+ReactDom.render(<App />, document.getElementById('root'));

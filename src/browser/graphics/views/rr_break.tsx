@@ -133,4 +133,4 @@ const Break: React.FunctionComponent = () => {
 	);
 };
 
-ReactDom.render(<Break />, document.getElementById('rr_break'));
+ReactDom.render(<Break />, document.getElementById('root'));
