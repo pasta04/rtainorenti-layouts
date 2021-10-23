@@ -10,7 +10,7 @@ import {Dictionary, zipObject} from 'lodash';
  * @returns
  */
 export const importFromSheet = (nodecg: NodeCG) => {
-	const logger = new nodecg.Logger('schedule:oengus');
+	const logger = new nodecg.Logger('schedule:sheets');
 
 	const {spreadsheetId, googleApiKey} = nodecg.bundleConfig;
 	if (!spreadsheetId) {

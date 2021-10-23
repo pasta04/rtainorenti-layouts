@@ -13,8 +13,12 @@ export type Configschema = {
 		/** サブタイトル */
 		subtitle: string;
 	};
-	/** OengusのID */
-	oengusMarathonId: string;
+	/**
+	 * OengusのmarathinID
+	 * 指定した場合：ゲーム情報をOengus、解説情報をスプレッドシートから取得
+	 * 指定しない場合：ゲーム、解説情報をスプレッドシートから取得
+	 */
+	oengusMarathonId?: string;
 	/** Google APIのkey */
 	googleApiKey?: string;
 	/** スプレッドシートのID */
