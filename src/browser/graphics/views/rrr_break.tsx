@@ -6,8 +6,9 @@ import {useReplicant} from '../../use-replicant';
 import {makeStyles} from '@material-ui/core';
 import {Clock} from '../components/clock';
 import useInterval from '@use-it/interval';
-import logo from '../images/logo/R2_1.png';
+import logo from '../images/logo/R3_3.png';
 import BackgroundImage from '../images/background/background-rr.png';
+import {Schedule} from '../../../nodecg/replicants';
 
 const SCREEN_WIDTH = 1280;
 const SCREEN_HEIGHT = 720;
@@ -20,14 +21,15 @@ const useStyles = makeStyles(() => ({
 	},
 	logo: {
 		position: 'absolute',
-		width: 1340,
-		top: -100,
+		width: 650,
+		top: 25,
+		left: 20,
 	},
 	nextArea: {
 		position: 'absolute',
-		top: 430,
-		left: 360,
-		fontSize: 50,
+		top: 375,
+		left: 630,
+		fontSize: 30,
 	},
 	label: {
 		fontFamily: 'PressStart2P',
@@ -42,12 +44,33 @@ const useStyles = makeStyles(() => ({
 		marginLeft: '1em',
 		wordBreak: 'break-all',
 	},
+	/** NOW LOADINGエリア */
 	loadingArea: {
 		position: 'absolute',
 		top: 300,
-		left: 120,
-		fontSize: 81,
+		left: 600,
+		fontSize: 45,
 		fontFamily: 'PressStart2P',
+	},
+	/** 今後の予定エリア */
+	scheduleArea: {
+		position: 'absolute',
+		top: 200,
+		left: 50,
+		fontSize: 24,
+		fontFamily: 'PixelMplus10',
+	},
+	/** 今後の予定文字 */
+	scheduleAreaLabel: {
+		// marginBottom: 40,
+		fontWeight: 'bold',
+		fontSize: 30,
+	},
+	scheduleAreaGames: {
+		position: 'relative',
+	},
+	scheduleAreaGamesItem: {
+		marginTop: 40,
 	},
 }));
 
@@ -79,6 +102,7 @@ const Break: React.FunctionComponent = () => {
 		});
 	}, []);
 
+	// now loadingの...を表示
 	useInterval(() => {
 		let newDot = loadingDot;
 		if (newDot.length === 3) {
@@ -92,6 +116,41 @@ const Break: React.FunctionComponent = () => {
 	useEffect(() => {
 		//
 	}, [currentRun, schedule]);
+
+	function limitArray<T>(array: T[], limit: number): T[] {
+		const list: T[] = [];
+		for (let i = 0; i < limit; i++) {
+			const item = array[i];
+			if (item) list.push(item);
+		}
+		return list;
+	}
+
+	const createScheduleItem = (schedule: Schedule[0]) => {
+		const date = new Date(schedule.date).getTime();
+		const now = new Date().getTime();
+		const difftime = date - now;
+		const hours = Math.floor(difftime / (1000 * 60 * 60));
+		const minutes = Math.floor((difftime % (1000 * 60 * 60)) / (1000 * 60));
+		const minutesStr = `00${minutes}`.slice(-2);
+		// console.log(
+		// 	`date=${date} now=${now} difftime=${difftime} hours=${hours} minutes=${minutes}`,
+		// );
+
+		const runners = schedule.runners.map((runner) => runner.name).join(', ');
+		const remains = `${hours}時間${minutesStr}分`;
+
+		return (
+			<div className={classes.scheduleAreaGamesItem}>
+				<div>{schedule.title}</div>
+				<div>Runner：{runners}</div>
+				<div style={{display: 'flex'}}>
+					<div>開始予定まで あと</div>
+					<div style={{width: 150, textAlign: 'right'}}>{remains}</div>
+				</div>
+			</div>
+		);
+	};
 
 	return (
 		<div className={classes.root}>
@@ -108,10 +167,24 @@ const Break: React.FunctionComponent = () => {
 				type={'line'}
 			/>
 
+			{/* 今後の予定 */}
+			<div className={classes.scheduleArea}>
+				<div className={classes.scheduleAreaLabel}>今後の予定</div>
+				<div className={classes.scheduleAreaGames}>
+					{schedule &&
+						limitArray(
+							schedule.filter(
+								(item) => item.index >= (currentRun ? currentRun.index : -1), // NEXTを含めないならここの条件からイコール抜く
+							),
+							3,
+						).map(createScheduleItem)}
+				</div>
+			</div>
+
 			{/* 次の走者 */}
 			<div className={classes.nextArea}>
 				<div className={classes.label}>NEXT</div>
-				<div style={{marginLeft: '3em'}}>
+				<div style={{marginLeft: '1em'}}>
 					<div className={classes.itemLabel}>GAME</div>
 					<div className={classes.item}>{currentRun?.title}</div>
 					<div className={classes.itemLabel}>CATEGORY</div>

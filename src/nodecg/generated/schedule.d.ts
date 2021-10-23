@@ -13,6 +13,8 @@ export type Schedule = {
 	platform?: string;
 	/** EST */
 	runDuration: string;
+	/** 開始予定時刻 */
+	date: string;
 	/** セットアップタイム */
 	setupDuration: string;
 	/** 走者 */

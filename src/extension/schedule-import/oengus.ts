@@ -153,9 +153,10 @@ export const importFromOengus = (nodecg: NodeCG) => {
 					pk: run.id,
 					index,
 					title: run.gameName,
-					englishTitle: '', // 今のところ使わない
+					englishTitle: '', // TODO: スプレッドシートから取得
 					category: run.categoryName,
 					platform: run.console,
+					date: run.date,
 					runDuration: formatDuration(run.estimate),
 					setupDuration: formatDuration(run.setupTime),
 					runners,

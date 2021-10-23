@@ -157,7 +157,7 @@ export default async (nodecg: NodeCG) => {
 			}
 		} catch (error) {
 			if (cb && !cb.handled) {
-				cb(error.message);
+				cb((error as any).message);
 			}
 		}
 	});

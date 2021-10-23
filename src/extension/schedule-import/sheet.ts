@@ -114,6 +114,7 @@ export const importFromSheet = (nodecg: NodeCG) => {
 					raceGenre: run['レースジャンル'],
 					category: run.category,
 					platform: run.platform,
+					date: '', // スプレッドシートのみの時は特に列が無い
 					runDuration: run.runDuration,
 					setupDuration: run.setupDuration,
 					runners: runnersData,
