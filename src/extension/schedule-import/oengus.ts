@@ -61,7 +61,7 @@ export const importFromOengus = (nodecg: NodeCG) => {
 		gameCategory: string;
 		name: string;
 	}[]> => {
-		// logger.info('run fetchCommentators');
+		logger.debug('run fetchCommentators');
 
 		// 1行に1ゲームの全解説者が詰まっている
 
@@ -108,7 +108,6 @@ export const importFromOengus = (nodecg: NodeCG) => {
 			return pre;
 		}, []);
 
-		// logger.info(rawData3);
 		return rawData3;
 	};
 
@@ -209,5 +208,5 @@ export const importFromOengus = (nodecg: NodeCG) => {
 	};
 
 	updateSchedule();
-	// setInterval(updateSchedule, 10 * 1000);
+	setInterval(updateSchedule, 30 * 1000);
 };

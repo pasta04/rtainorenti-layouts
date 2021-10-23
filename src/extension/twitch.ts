@@ -76,9 +76,10 @@ export const twitch = (nodecg: NodeCG) => {
 			const newTitle = `${genre}${newRun.title} ${
 				newRun.category
 			} (${newRun.runners.map((runner) => runner.name).join('/')})`;
-			console.log(newTitle);
+			log.debug(`更新タイトル： ${newTitle}`);
 			// RTA in 俺んち用
 			// const newTitle = `${CHANNEL_TITLE_PREFIX}${newRun.title}`;
+
 			if (lastUpdateTitle === newTitle) {
 				return;
 			}
@@ -108,6 +109,7 @@ export const twitch = (nodecg: NodeCG) => {
 				);
 			}
 
+			log.debug(`ゲーム情報更新開始 channelId=${twitchRep.value.channelId}`);
 			await got.patch(
 				`https://api.twitch.tv/helix/channels?broadcaster_id=${twitchRep.value.channelId}`,
 				{
@@ -123,6 +125,8 @@ export const twitch = (nodecg: NodeCG) => {
 					},
 				},
 			);
+			log.debug(`ゲーム情報更新終了`);
+
 			lastUpdateTitle = newTitle;
 			log.info(
 				`Updated Twitch status to ${newRun.title} (${newRun.englishTitle})`,
